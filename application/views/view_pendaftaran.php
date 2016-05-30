@@ -1,0 +1,134 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
+
+<!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Pendaftaran
+                    <small>Subheading</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="<?php echo base_url(); ?>">Home</a>
+                    </li>
+                    <li class="active">Pendaftaran</li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+        <?php echo validation_errors(); ?>
+        <!-- Content Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <?php echo form_open('pendaftaran/daftar', array('class' => 'form-horizontal')); ?>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="lblEmail">Email:</label>
+                        <div class="col-xs-5">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="<?php echo set_value('email'); ?>">
+                        </div>
+                    </div>                    
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="lblNama">Nama Lengkap:</label>
+                        <div class="col-xs-4">
+                            <input type="text" name="namaDepan" class="form-control" id="nama-depan" placeholder="Nama Depan" value="<?php echo set_value('namaDepan'); ?>">
+                        </div>
+                        <div class="col-xs-5">
+                            <input type="text" name="namaBelakang" class="form-control" id="nama-belakang" placeholder="Nama Belakang" value="<?php echo set_value('namaBelakang'); ?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="lblJekel">Jenis Kelamin:</label>
+                        <div class="col-xs-2">
+                            <label class="radio-inline">
+                                <input type="radio" name="jnsKelamin" value="L" <?php if (set_value('jnsKelamin') == 'L'){echo 'checked'; } ?>> Laki-laki
+                            </label>
+                        </div>
+                        <div class="col-xs-2">
+                            <label class="radio-inline">
+                                <input type="radio" name="jnsKelamin" value="P" <?php if (set_value('jnsKelamin') == 'P'){echo 'checked'; } ?> > Perempuan
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="lblTelp">No. Telp:</label>
+                        <div class="col-xs-5">
+                            <input type="text" name="noTelpon" class="form-control" id="nomor-telpon" placeholder="Nomor Telepon / Handphone" value="<?php echo set_value('noTelpon'); ?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="lblTglLahir">Tempat dan Tanggal Lahir</label>
+                        <div class="col-xs-3">
+                            <input type="text" name="tmpLahir" class="form-control" id="tempat-lahir" placeholder="Tempat Lahir" value="<?php echo set_value('tmpLahir'); ?>">
+                        </div>
+                        <div class="col-xs-2">
+                            <select class="form-control" name="tglLahir">
+                                <option value="">Tanggal</option> 
+                                <?php
+                                for ($i=1; $i <= 31; $i++) { 
+                                    echo "<option value='$i'>$i</option>"; 
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-xs-2">
+                            <select class="form-control" name="blnLahir">
+                                <option value="">Bulan</option>
+                                <?php
+                                for ($i=1; $i <= 12; $i++) { 
+                                    echo "<option value='$i'>$i</option>"; 
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-xs-2">
+                            <select class="form-control" name="thnLahir">
+                                <option value="">Tahun</option>
+                                <?php
+                                $tahun = date('Y');
+                                $awal = $tahun - 60;
+                                $akhir = $tahun - 15;
+                                for ($i=$awal; $i <= $akhir; $i++) { 
+                                    echo "<option value='$i'>$i</option>"; 
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="lblAlamat">Alamat:</label>
+                        <div class="col-xs-9">
+                            <textarea rows="3" name="alamat" class="form-control" id="alamat" placeholder="Masukan Alamat Lengkap" ><?php echo set_value('alamat'); ?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="lblPassword">Password:</label>
+                        <div class="col-xs-4">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
+                        </div>
+                        <div class="col-xs-5">
+                            <input type="password" name="passwordUlang" class="form-control" id="password-ulang" placeholder="Ulangi Password">
+                        </div>
+                    </div>                   
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-9">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" value="Setuju" name="persetujuan">  Saya Setuju dengan <a href="<?php echo base_url().'faq' ?>">Kebijakan dan Ketentuan</a> yang berlaku.
+                            </label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-9">
+                            <input type="submit" class="btn btn-primary" value="Daftar">
+                            <input type="reset" class="btn btn-default" value="Reset">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
