@@ -65,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="col-xs-2">
                             <select class="form-control" name="tglLahir">
-                                <option value="">Tanggal</option> 
+                                <option value="<?php if (set_value('tglLahir')){echo set_value('tglLahir'); } ?>"><?php if (set_value('tglLahir')){echo set_value('tglLahir'); } else {echo "Tanggal";} ?></option> 
                                 <?php
                                 for ($i=1; $i <= 31; $i++) { 
                                     echo "<option value='$i'>$i</option>"; 
@@ -75,7 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="col-xs-2">
                             <select class="form-control" name="blnLahir">
-                                <option value="">Bulan</option>
+                                <option value="<?php if (set_value('blnLahir')){echo set_value('blnLahir'); } ?>"><?php if (set_value('blnLahir')){echo set_value('blnLahir'); } else {echo "Bulan";} ?></option> 
                                 <?php
                                 for ($i=1; $i <= 12; $i++) { 
                                     echo "<option value='$i'>$i</option>"; 
@@ -85,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="col-xs-2">
                             <select class="form-control" name="thnLahir">
-                                <option value="">Tahun</option>
+                                <option value="<?php if (set_value('thnLahir')){echo set_value('thnLahir'); } ?>"><?php if (set_value('thnLahir')){echo set_value('thnLahir'); } else {echo "Tahun";} ?></option> 
                                 <?php
                                 $tahun = date('Y');
                                 $awal = $tahun - 60;
@@ -106,7 +106,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group">
                         <label class="control-label col-xs-3" for="lblPassword">Password:</label>
                         <div class="col-xs-4">
-                            <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Masukan Password" value="<?php echo set_value('password'); ?>">
                         </div>
                         <div class="col-xs-5">
                             <input type="password" name="passwordUlang" class="form-control" id="password-ulang" placeholder="Ulangi Password">
@@ -115,7 +115,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <label class="checkbox-inline">
-                                <input type="checkbox" value="Setuju" name="persetujuan">  Saya Setuju dengan <a href="<?php echo base_url().'faq' ?>">Kebijakan dan Ketentuan</a> yang berlaku.
+                                <input type="checkbox" value="setuju" name="persetujuan" <?php if (set_value('persetujuan')){echo 'checked'; } ?>>  Saya Setuju dengan <a href="<?php echo base_url().'persetujuan' ?>">Kebijakan dan Ketentuan</a> yang berlaku.
                             </label>
                         </div>
                     </div>

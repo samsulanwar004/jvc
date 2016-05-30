@@ -22,6 +22,7 @@ class Pendaftaran extends CI_Controller {
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[12]');
         $this->form_validation->set_rules('passwordUlang', 'Ulangi Password', 'trim|required|matches[password]');
+        $this->form_validation->set_rules('persetujuan', 'Kebijakan dan Ketentuan', 'required');
 
         if ($this->form_validation->run() == FALSE)
         {
