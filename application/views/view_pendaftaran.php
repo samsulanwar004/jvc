@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
         <!-- /.row -->
-        <?php echo validation_errors(); ?>
+<?php echo validation_errors('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>', '</div>'); ?>
         <!-- Content Row -->
         <div class="row">
             <div class="col-lg-12">

@@ -120,7 +120,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header" style="padding:35px 50px;">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h1><span class="glyphicon glyphicon-lock"></span> Login</h1>
                 </div>
                 <div class="modal-body" style="padding:40px 50px;">

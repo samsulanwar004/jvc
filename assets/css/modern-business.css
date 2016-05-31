@@ -92,7 +92,7 @@ footer {
     }
 }
 
-.modal-header, .close {
+.modal-header {
       background-color: red;
       color:white !important;
       text-align: center;
