@@ -103,9 +103,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </li>
                         </ul>
                     </li>
+                    <?php 
+                        $logged_in = $this->session->userdata('logged_in');
+                        if (isset($logged_in)? $logged_in : null)
+                        {
+                            echo '<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> '.strtoupper($logged_in['nama']).' <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="'.base_url().'profil'.'"><span class="glyphicon glyphicon-pencil"></span> Profil</a>
+                                        </li>
+                                        <li>
+                                            <a href="'.base_url().'login/logout'.'"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>';
+                        }
+                        else
+                        {
+                    ?>
                     <li>
                         <a href="#" id="myLogin">LOGIN</a>
                     </li>
+                    <?php
+                        }
+                    ?>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

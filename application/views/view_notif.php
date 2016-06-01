@@ -24,6 +24,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">
             <div class="col-lg-12">
             <?php echo validation_errors('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>', '</div>'); ?>
+            <div class="jumbotron">
+                    <h2><span class="label label-success"><?php echo $title; ?></span></h2>
+                    <?php
+                        if (isset($content)? $content : null)
+                        {
+                            echo "<p>".$content."</p>";
+                        }
+                    ?>
+                </div>
             </div>
         </div>
         <!-- /.row -->

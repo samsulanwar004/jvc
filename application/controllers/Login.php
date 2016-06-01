@@ -18,6 +18,7 @@ class Login extends CI_Controller {
 		{	
 
 			$data['title'] = "Gagal Login";
+			$data['content'] 	= "Ayo Boskuh, coba di ingat - ingat ? :)";
 			$this->load->view('templates/home/header', $data);
 			$this->load->view('view_notif');
 			$this->load->view('templates/home/footer');
@@ -26,6 +27,7 @@ class Login extends CI_Controller {
 		else
 		{
 			$data['title'] = "Berhasil Login";
+			$data['content'] 	= "Have Fun Boskuh :)";
 			$this->load->view('templates/home/header', $data);
 			$this->load->view('view_notif');
 			$this->load->view('templates/home/footer');
@@ -54,4 +56,16 @@ class Login extends CI_Controller {
 			return FALSE;
 		}
 	}
+
+	public function logout()
+	{
+		$this->session->unset_userdata('logged_in');
+		$this->session->sess_destroy();
+
+		$data['title'] 		= "Berhasil Logout";
+		$data['content'] 	= "Kembali lagi nanti ya Boskuh :)";
+		$this->load->view('templates/home/header', $data);
+		$this->load->view('view_notif');
+		$this->load->view('templates/home/footer');
+}
 }
