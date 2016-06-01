@@ -33,19 +33,6 @@ class Pendaftaran extends CI_Controller {
         $this->form_validation->set_rules('passwordUlang', 'Ulangi Password', 'trim|required|matches[password]');
         $this->form_validation->set_rules('persetujuan', 'Kebijakan dan Ketentuan', 'required');
 
-        $email 			= $this->input->post('email');
-        $namaDepan 		= $this->input->post('namaDepan');
-        $namaBelakang 	= $this->input->post('namaBelakang');
-        $jnsKelamin 	= $this->input->post('jnsKelamin');
-        $tmpLahir 		= $this->input->post('tmpLahir');
-        $tglLahir 		= $this->input->post('tglLahir');
-        $blnLahir 		= $this->input->post('blnLahir');
-        $thnLahir 		= $this->input->post('thnLahir');
-        $noTelpon 		= $this->input->post('noTelpon');
-        $alamat 		= $this->input->post('alamat');
-        $password 		= $this->input->post('password');
-        $passwordUlang 	= $this->input->post('passwordUlang');
-
         if ($this->form_validation->run() == FALSE)
         {
             $data['title'] = "Pendaftaran";
@@ -88,12 +75,12 @@ class Pendaftaran extends CI_Controller {
 	        );	        
 	        //var_dump($params);die();
 
-	        //$this->members_model->simpan_member($params);
-	        $this->notification_model->kirim_email_pendaftaran($params);
+	        $this->members_model->simpan_member($params);
+	        //$this->notification_model->kirim_email_pendaftaran($params);
 
             $data['title'] = "Berhasil Mendaftar";
 			$this->load->view('templates/home/header', $data);
-			$this->load->view('view_sukses');
+			$this->load->view('view_notif');
 			$this->load->view('templates/home/footer');
         }
 	}

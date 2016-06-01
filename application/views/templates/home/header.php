@@ -123,14 +123,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <h1><span class="glyphicon glyphicon-lock"></span> Login</h1>
                 </div>
                 <div class="modal-body" style="padding:40px 50px;">
-                  <form role="form">
+                  <?php echo form_open('login/member', array('role' => 'form')); ?>
                     <div class="form-group">
-                      <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                      <input type="text" class="form-control" id="usrname" placeholder="Email">
+                      <label for="username"><span class="glyphicon glyphicon-user"></span> Username</label>
+                      <input type="email" class="form-control" name="email" id="email" placeholder="Email">
                     </div>
                     <div class="form-group">
-                      <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-                      <input type="text" class="form-control" id="psw" placeholder="Password">
+                      <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                      <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                     </div>
                       <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
                   </form>
