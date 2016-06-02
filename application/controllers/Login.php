@@ -11,26 +11,40 @@ class Login extends CI_Controller {
 
 	public function member()
 	{
-		$this->form_validation->set_rules('email', 'Email', 'trim|required');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|callback_cek_login');
-
-		if ($this->form_validation->run() == FALSE)
-		{	
-
-			$data['title'] = "Gagal Login";
-			$data['content'] 	= "Ayo Boskuh, coba di ingat - ingat ? :)";
+		$session = $this->session->userdata('logged_in');
+		if (isset($session)? $session : null)
+		{
+			$data = array(
+				'title' => "Sudah Login",
+				'content' => "Boskuh sudah login :)"
+			);
 			$this->load->view('templates/home/header', $data);
 			$this->load->view('view_notif');
 			$this->load->view('templates/home/footer');
-
 		}
 		else
 		{
-			$data['title'] = "Berhasil Login";
-			$data['content'] 	= "Have Fun Boskuh :)";
-			$this->load->view('templates/home/header', $data);
-			$this->load->view('view_notif');
-			$this->load->view('templates/home/footer');
+			$this->form_validation->set_rules('email', 'Email', 'trim|required');
+			$this->form_validation->set_rules('password', 'Password', 'trim|required|callback_cek_login');
+
+			if ($this->form_validation->run() == FALSE)
+			{	
+
+				$data['title'] = "Gagal Login";
+				$data['content'] 	= "Ayo Boskuh, coba di ingat - ingat ? :)";
+				$this->load->view('templates/home/header', $data);
+				$this->load->view('view_notif');
+				$this->load->view('templates/home/footer');
+
+			}
+			else
+			{
+				$data['title'] = "Berhasil Login";
+				$data['content'] 	= "Have Fun Boskuh :)";
+				$this->load->view('templates/home/header', $data);
+				$this->load->view('view_notif');
+				$this->load->view('templates/home/footer');
+			}
 		}
 	}
 

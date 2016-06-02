@@ -8,6 +8,17 @@ class Members_model extends CI_Model {
 		return $this->db->insert('members', $params);
 	}
 
+	function get_member($id_member)
+	{
+		$this->db->from('members');
+		$this->db->where('id_member', $id_member);
+		$this->db->limit(1);
+		$query 	= $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
 	function get_idmember()
 	{
 		$this->db->select("id");
