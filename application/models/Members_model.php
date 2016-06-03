@@ -19,6 +19,12 @@ class Members_model extends CI_Model {
 		return $result;
 	}
 
+	function update_member($params = array())
+	{
+		$this->db->where('id_member', $params['id_member']);
+		$this->db->update('members', $params);
+	}
+
 	function get_idmember()
 	{
 		$this->db->select("id");

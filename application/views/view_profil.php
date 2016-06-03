@@ -19,7 +19,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
         <!-- /.row -->
-<?php echo validation_errors('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>', '</div>'); ?>
+        <?php 
+        echo validation_errors('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>', '</div>'); 
+        echo $this->session->flashdata('success_msg');
+        ?>
         <!-- Intro Content -->
         <div class="row">
             <div class="col-xs-6 col-md-3">
@@ -88,7 +91,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <h2><span class="glyphicon glyphicon-edit"></span> Edit Profil</h2>
                     </div>
                     <div class="modal-body" style="padding:40px 50px;">
-                      <?php echo form_open('members/edit', array('role' => 'form')); ?>
+                      <?php echo form_open('profil/edit', array('role' => 'form')); ?>
                         <div class="form-group">
                           <label for="email">Email</label>
                           <input type="email" class="form-control" name="email" value="<?php echo $email; ?>" placeholder="Email">
@@ -130,7 +133,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <h2><span class="glyphicon glyphicon-edit"></span> Ganti Password</h2>
                     </div>
                     <div class="modal-body" style="padding:40px 50px;">
-                      <?php echo form_open('members/ganti_password', array('role' => 'form')); ?>
+                      <?php echo form_open('profil/ganti_password', array('role' => 'form')); ?>
                         <div class="form-group">
                           <label for="password">Password Lama</label>
                           <input type="password" class="form-control" name="passwordLama" placeholder="Password Lama">
