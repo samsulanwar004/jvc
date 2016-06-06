@@ -69,11 +69,12 @@ class Profil extends CI_Controller {
         	$alamat 	= $this->input->post('alamat');
 
         	$params = array(
-        		'id_member' => $idMember,
-        		'email' 	=> $email,
-        		'nama' 		=> $namaDepan.' '.$namaBlkng,
-        		'noTelpon' 	=> $noTelpon,
-        		'alamat' 	=> $alamat
+        		'id_member' 	=> $idMember,
+        		'email' 		=> $email,
+        		'nama' 			=> $namaDepan.' '.$namaBlkng,
+        		'noTelpon' 		=> $noTelpon,
+        		'alamat' 		=> $alamat,
+        		'modified_in'	=> date('Y-m-d H:i:s')
         	);
         	
         	$this->members_model->update_member($params);
@@ -99,8 +100,9 @@ class Profil extends CI_Controller {
         	$id_member		= $this->input->post('idMember');
         	$passwordBaru 	= $this->input->post('passwordBaru');
         	$params = array(
-        		'id_member'	=> $id_member,
-        		'password' 	=> md5($passwordBaru)
+        		'id_member'		=> $id_member,
+        		'password' 		=> md5($passwordBaru),
+        		'modified_in'	=> date('Y-m-d H:i:s')
         	);
         	$this->members_model->update_member($params);
         	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Update Password</div>');
@@ -147,8 +149,9 @@ class Profil extends CI_Controller {
         $this->load->library('upload', $config);
 
         $member = array(
-        	'id_member' => $id_member,
-        	'foto'		=> $id_member.'.jpg'
+        	'id_member' 	=> $id_member,
+        	'foto'			=> $id_member.'.jpg',
+        	'modified_in'	=> date('Y-m-d H:i:s')
         );
         $this->members_model->update_member($member);
 

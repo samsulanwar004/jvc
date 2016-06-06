@@ -14,6 +14,11 @@ class Members extends CI_Controller {
 		$member = $this->members_model->get_member($id);
 		if ($member->active_code === $code)
 		{
+			$params = array(
+				'id_member' => $id,
+				'status' 	=> 1
+			);
+			$this->members_model->update_member($params);
 			$data = array(
 				'title' => 'Aktifasi Akun',
 				'content' => 'Aktifasi Berhasil'

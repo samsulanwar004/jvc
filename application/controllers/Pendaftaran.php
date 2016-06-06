@@ -92,7 +92,10 @@ class Pendaftaran extends CI_Controller {
 	        $this->members_model->simpan_member($params);
 	        $this->notification_model->kirim_email_pendaftaran($params, $password);
 
-            $data['title'] = "Berhasil Mendaftar";
+            $data = array(
+            	'title' 	=> "Berhasil Mendaftar",
+            	'content' 	=> "Kami mengirim kode aktifasi ke email ".$email.". Segera lakukan aktifasi untuk mengaktifkan akun anda."
+            );
 			$this->load->view('templates/home/header', $data);
 			$this->load->view('view_notif');
 			$this->load->view('templates/home/footer');
