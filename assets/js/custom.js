@@ -16,6 +16,18 @@ $(document).ready(function(){
     });
 });
 
+$(document).ready(function(){
+    $("#myGantiFoto").click(function(){
+        $("#myModalGantiFoto").modal();
+    });
+});
+
+$(document).ready(function(){
+    $("#myFoto").click(function(){
+        $("#myModalFoto").modal();
+    });
+});
+
 $(window).scroll(function() {
   if ($(document).scrollTop() > 1) {
     $('nav').addClass('shrink');

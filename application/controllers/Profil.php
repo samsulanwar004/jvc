@@ -26,6 +26,7 @@ class Profil extends CI_Controller {
 				'alamat'=> $member->alamat,
 				'nohp'	=> $member->noTelpon,
 				'jbtn'	=> $member->jabatan,
+				'nopol'	=> $member->nopol,
 				'reg'	=> $member->register
 			);
 			$this->load->view('templates/home/header', $data);
@@ -51,6 +52,7 @@ class Profil extends CI_Controller {
 		$this->form_validation->set_rules('namaDepan', 'Nama Depan', 'trim|required');
 		$this->form_validation->set_rules('noTelpon', 'Nomor Telepon', 'trim|required|min_length[11]|max_length[12]');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[3]|max_length[50]');
+		$this->form_validation->set_rules('nopol', 'Nomor Polisi', 'trim|required|min_length[6]|max_length[9]|callback_cek_nopol');
 
 		if ($this->form_validation->run() == FALSE)
         {
@@ -76,7 +78,8 @@ class Profil extends CI_Controller {
         	
         	$this->members_model->update_member($params);
         	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Update Profil</div>');
-        	$this->index();
+        	redirect('profil');
+        	$this->session->unset_userdata('success_msg');
         }	
 	}
 
@@ -84,6 +87,7 @@ class Profil extends CI_Controller {
 	{
 		$this->form_validation->set_rules('passwordLama', 'Password Lama', 'trim|required|callback_cek_password');
 		$this->form_validation->set_rules('passwordBaru', 'Password Baru', 'trim|required|min_length[6]|max_length[12]');
+		$this->form_validation->set_rules('passwordUlang', 'Ulang Password', 'trim|required|matches[passwordBaru]');
 
 		if ($this->form_validation->run() == FALSE)
         {
@@ -100,7 +104,8 @@ class Profil extends CI_Controller {
         	);
         	$this->members_model->update_member($params);
         	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Update Password</div>');
-        	$this->index();
+        	redirect('profil');
+        	$this->session->unset_userdata('success_msg');
         }
 	}
 
@@ -119,4 +124,45 @@ class Profil extends CI_Controller {
 			return FALSE;
 		}
 	}
+
+	public function cek_nopol($str)
+	{
+	   if (preg_match('#[0-9]#', $str) && preg_match('#[A-Z]#', $str) && strpos($str, " ") == false) {
+	     return TRUE;
+	   }
+	   $this->form_validation->set_message('cek_nopol', 'Nopol polisi tidak sesuai format');
+	   return FALSE;
+	}
+
+	public function ganti_foto()
+    {
+    	$id_member	= $this->input->post('idMember');
+
+        $config['upload_path']		= './upload_foto/';
+        $config['allowed_types']	= 'jpg';
+        $config['max_size']			= 300;
+        $config['file_name']		= $id_member;
+        $config['overwrite']		= TRUE;
+
+        $this->load->library('upload', $config);
+
+        $member = array(
+        	'id_member' => $id_member,
+        	'foto'		=> $id_member.'.jpg'
+        );
+        $this->members_model->update_member($member);
+
+        if ( ! $this->upload->do_upload('foto'))
+        {
+                $error = $this->upload->display_errors();
+                $this->session->set_flashdata('success_msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.$error.'</div>');
+                redirect('profil');
+        }
+        else
+        {
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Upload Foto</div>');
+            redirect('profil');
+            $this->session->unset_userdata('success_msg');
+        }
+    }
 }

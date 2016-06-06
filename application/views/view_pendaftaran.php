@@ -100,7 +100,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group">
                         <label class="control-label col-xs-3" for="lblAlamat">Alamat:</label>
                         <div class="col-xs-9">
-                            <textarea rows="3" name="alamat" class="form-control" id="alamat" placeholder="Masukan Alamat Lengkap" ><?php echo set_value('alamat'); ?></textarea>
+                            <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Masukan alamat lengkap" value="<?php echo set_value('alamat'); ?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="lblPlatno">Nomor Polisi:</label>
+                        <div class="col-xs-3">
+                            <input type="text" name="nopol" class="form-control" id="nopol" placeholder="Contoh : AB1234J" value="<?php echo set_value('nopol'); ?>">
                         </div>
                     </div>
                     <div class="form-group">

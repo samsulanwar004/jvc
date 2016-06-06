@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">
             <div class="col-xs-6 col-md-3">
             <a href="#" class="thumbnail">
-                <img class="img-responsive" src="http://placehold.it/400x600" width="400px" height="600px" alt="Foto Profil">
+                <img class="img-responsive" src="<?php echo base_url().'upload_foto/'.$id.'.jpg'; ?>" alt="Foto Profil" id="myFoto">
             </a>
             </div>
             <div class="col-md-6">
@@ -62,13 +62,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <td><?php echo $jbtn; ?></td>
                         </tr>
                         <tr>
+                            <td>Nomor Polisi</td>
+                            <td><?php echo $nopol; ?></td>
+                        </tr>
+                        <tr>
                             <td>Register</td>
                             <td><?php echo $reg; ?></td>
                         </tr>
                         <tr>
                             <td>
                                 <button type="button" class="btn btn-success" id="myEdit">Edit</button>
-                                <button type="button" class="btn btn-success" id="myGantiPassword">Ganti Password</button>
+                                <button type="button" class="btn btn-success" id="myGantiFoto">Ganti Foto</button>
+                                <button type="button" class="btn btn-success" id="myGantiPassword">Ganti Password</button>                                
                             </td>
                             <td></td>
                         </tr>
@@ -109,6 +114,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <input type="text" class="form-control" name="noTelpon" value="<?php echo $nohp; ?>"  placeholder="Nomor Telepon">
                         </div>
                         <div class="form-group">
+                          <label for="telpon">Nomor Polisi</label>
+                          <input type="text" class="form-control" name="nopol" value="<?php echo $nopol; ?>"  placeholder="Contoh : AB1234J">
+                        </div>
+                        <div class="form-group">
                           <label for="alamat">Alamat</label>
                           <input type="text" class="form-control" name="alamat" value="<?php echo $alamat; ?>"  placeholder="Alamat">
                         </div>
@@ -142,9 +151,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <label for="password">Password Baru</label>
                           <input type="password" class="form-control" name="passwordBaru" placeholder="Password Baru">
                         </div>
+                        <div class="form-group">
+                          <label for="passwordUlang">Ulangi Password Baru</label>
+                          <input type="password" class="form-control" name="passwordUlang" placeholder="Ulangi Password Baru">
+                        </div>
                           <input type="hidden" name="idMember" value="<?php echo $id; ?>">
                           <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-floppy-disk"></span> Simpan</button>
                       </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Batal</button>
+                    </div>
+                </div> 
+            </div>
+        </div>
+
+        <!-- Modal Login-->
+        <div class="modal fade" id="myModalGantiFoto" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:35px 50px;">
+                      <h2><span class="glyphicon glyphicon-edit"></span> Ganti Foto</h2>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <?php echo form_open_multipart('profil/ganti_foto', array('role' => 'form'));?>
+                            <div class="form-group">
+                              <label for="foto">Upload Foto</label>
+                              <input type="file" class="form-control" name="foto">
+                              <p>Max size : 300 KB</p>
+                            </div>
+                          <input type="hidden" name="idMember" value="<?php echo $id; ?>">
+                          <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Batal</button>
+                    </div>
+                </div> 
+            </div>
+        </div>
+
+        <!-- Modal Login-->
+        <div class="modal fade" id="myModalFoto" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:35px 50px;">
+                      <h2><span class="glyphicon glyphicon-pushpin"></span> Foto Profil</h2>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <img class="img-responsive" src="<?php echo base_url().'upload_foto/'.$id.'.jpg'; ?>" alt="Foto Profil" >
                     </div>
                     <div class="modal-footer">
                       <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Batal</button>
