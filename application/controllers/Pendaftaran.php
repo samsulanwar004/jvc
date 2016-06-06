@@ -90,7 +90,7 @@ class Pendaftaran extends CI_Controller {
 	        //var_dump($params);die();
 
 	        $this->members_model->simpan_member($params);
-	        $this->notification_model->kirim_email_pendaftaran($params);
+	        $this->notification_model->kirim_email_pendaftaran($params, $password);
 
             $data['title'] = "Berhasil Mendaftar";
 			$this->load->view('templates/home/header', $data);

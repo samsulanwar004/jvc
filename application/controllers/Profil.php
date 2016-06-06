@@ -165,4 +165,16 @@ class Profil extends CI_Controller {
             $this->session->unset_userdata('success_msg');
         }
     }
+
+    public function email()
+    {
+    	$data = array(
+    		'nama' => 'samsul',
+    		'email' => 'sam@jvc.or.id',
+    		'password' => 'qwerty',
+    		'id' => '12345678',
+    		'code' => '1234567890'
+    	);
+    	$this->load->view('templates/email/konfirmasi', $data);
+    }
 }
