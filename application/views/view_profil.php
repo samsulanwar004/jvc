@@ -98,10 +98,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="modal-body" style="padding:40px 50px;">
                       <?php echo form_open('profil/edit', array('role' => 'form')); ?>
                         <div class="form-group">
-                          <label for="email">Email</label>
-                          <input type="email" class="form-control" name="email" value="<?php echo $email; ?>" placeholder="Email">
-                        </div>
-                        <div class="form-group">
                           <label for="nama">Nama Depan</label>
                           <input type="text" class="form-control" name="namaDepan" value="<?php echo $nama_depan; ?>"  placeholder="Nama Depan">
                         </div>

@@ -48,7 +48,6 @@ class Profil extends CI_Controller {
 
 	public function edit()
 	{
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|max_length[50]');
 		$this->form_validation->set_rules('namaDepan', 'Nama Depan', 'trim|required');
 		$this->form_validation->set_rules('noTelpon', 'Nomor Telepon', 'trim|required|min_length[11]|max_length[12]');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[3]|max_length[50]');
@@ -62,7 +61,6 @@ class Profil extends CI_Controller {
         else
         {
         	$idMember 	= $this->input->post('idMember');
-        	$email 		= $this->input->post('email');
         	$namaDepan 	= $this->input->post('namaDepan');
         	$namaBlkng 	= $this->input->post('namaBelakang');
         	$noTelpon 	= $this->input->post('noTelpon');
@@ -70,7 +68,6 @@ class Profil extends CI_Controller {
 
         	$params = array(
         		'id_member' 	=> $idMember,
-        		'email' 		=> $email,
         		'nama' 			=> $namaDepan.' '.$namaBlkng,
         		'noTelpon' 		=> $noTelpon,
         		'alamat' 		=> $alamat,
