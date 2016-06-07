@@ -161,7 +161,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Batal</button>
                   <p>Bukan Member? <a href="<?php echo base_url().'pendaftaran'?>">Daftar Sekarang</a></p>
-                  <p>Lupa <a href="<?php echo base_url().'lupa_password'?>">Password?</a></p>
+                  <p>Lupa <a href="<?php echo base_url().'members/lupa_password'?>">Password?</a></p>
                 </div>
             </div> 
         </div>

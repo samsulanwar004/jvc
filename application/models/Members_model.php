@@ -19,6 +19,17 @@ class Members_model extends CI_Model {
 		return $result;
 	}
 
+	function get_member_by_email($email)
+	{
+		$this->db->from('members');
+		$this->db->where('email', $email);
+		$this->db->limit(1);
+		$query 	= $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
 	function update_member($params = array())
 	{
 		$this->db->where('id_member', $params['id_member']);
