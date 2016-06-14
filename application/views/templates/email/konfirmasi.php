@@ -178,7 +178,7 @@
                   <td class="computer-image">
                     <br>
                     <br class="mobile-hide" />
-                    <img style="display:block;" width="224" height="213" src="<?php echo base_url().'assets/images/barongan.png' ?>" alt="hello">
+                    <img style="display:block;" width="224" height="213" src="<?php echo base_url().'assets/images/logo_jvc.png' ?>" alt="hello">
                   </td>
                   <td style="color: #ffffff;" class="header-text">
                     <br>
