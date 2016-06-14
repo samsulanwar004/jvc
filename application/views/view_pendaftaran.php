@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <!-- Page Content -->
-    <div class="container">
+    <div class="container main-content">
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
