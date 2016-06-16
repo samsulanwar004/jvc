@@ -109,7 +109,7 @@ class Members extends CI_Controller {
 		$member = $this->members_model->get_member_by_email($email);
 		if ($member == FALSE)
 		{
-			$this->form_validation->set_message('cek_email', 'Email belum pernah terdaftar');
+			$this->form_validation->set_message('_cek_email', 'Email belum pernah terdaftar');
 			return FALSE;
 		}
 		else
