@@ -43,7 +43,7 @@ class Pendaftaran extends CI_Controller {
 		$this->form_validation->set_rules('thnLahir', 'Tahun Lahir', 'required');
 		$this->form_validation->set_rules('noTelpon', 'Nomor Telepon', 'trim|required|min_length[11]|max_length[12]|is_unique[members.noTelpon]');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[3]|max_length[50]');
-		$this->form_validation->set_rules('nopol', 'Nomor Polisi', 'trim|required|min_length[6]|max_length[9]|is_unique[members.nopol]|callback_cek_nopol');
+		$this->form_validation->set_rules('nopol', 'Nomor Polisi', 'trim|required|min_length[6]|max_length[9]|is_unique[members.nopol]|callback__cek_nopol');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[12]');
         $this->form_validation->set_rules('passwordUlang', 'Ulangi Password', 'trim|required|matches[password]');
         $this->form_validation->set_rules('persetujuan', 'Kebijakan dan Ketentuan', 'required');
@@ -103,12 +103,12 @@ class Pendaftaran extends CI_Controller {
 	    
 	}
 
-	public function cek_nopol($str)
+	public function _cek_nopol($str)
 	{
 	   if (preg_match('#[0-9]#', $str) && preg_match('#[a-zA-Z]#', $str) && strpos($str, " ") == false) {
 	     return TRUE;
 	   }
-	   $this->form_validation->set_message('cek_nopol', 'Nopol polisi tidak sesuai format');
+	   $this->form_validation->set_message('_cek_nopol', 'Nopol polisi tidak sesuai format');
 	   return FALSE;
 	}
 

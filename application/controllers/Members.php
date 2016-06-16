@@ -90,7 +90,7 @@ class Members extends CI_Controller {
 
 	public function konfirmasi_reset_password()
 	{
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|max_length[50]|callback_cek_email');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|max_length[50]|callback__cek_email');
 		$email = $this->input->post('email');
 		if ($this->form_validation->run() == FALSE)
         {
@@ -104,7 +104,7 @@ class Members extends CI_Controller {
         }
 	}
 
-	public function cek_email($email)
+	public function _cek_email($email)
 	{
 		$member = $this->members_model->get_member_by_email($email);
 		if ($member == FALSE)

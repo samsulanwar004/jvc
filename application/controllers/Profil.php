@@ -51,7 +51,7 @@ class Profil extends CI_Controller {
 		$this->form_validation->set_rules('namaDepan', 'Nama Depan', 'trim|required');
 		$this->form_validation->set_rules('noTelpon', 'Nomor Telepon', 'trim|required|min_length[11]|max_length[12]');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[3]|max_length[50]');
-		$this->form_validation->set_rules('nopol', 'Nomor Polisi', 'trim|required|min_length[6]|max_length[9]|callback_cek_nopol');
+		$this->form_validation->set_rules('nopol', 'Nomor Polisi', 'trim|required|min_length[6]|max_length[9]|callback__cek_nopol');
 
 		if ($this->form_validation->run() == FALSE)
         {
@@ -83,7 +83,7 @@ class Profil extends CI_Controller {
 
 	public function ganti_password()
 	{
-		$this->form_validation->set_rules('passwordLama', 'Password Lama', 'trim|required|callback_cek_password');
+		$this->form_validation->set_rules('passwordLama', 'Password Lama', 'trim|required|callback__cek_password');
 		$this->form_validation->set_rules('passwordBaru', 'Password Baru', 'trim|required|min_length[6]|max_length[12]');
 		$this->form_validation->set_rules('passwordUlang', 'Ulang Password', 'trim|required|matches[passwordBaru]');
 
@@ -108,7 +108,7 @@ class Profil extends CI_Controller {
         }
 	}
 
-	public function cek_password($password)
+	public function _cek_password($password)
 	{
 		$id_member = $this->input->post('idMember');
 		$result = $this->members_model->get_member($id_member);
@@ -119,17 +119,17 @@ class Profil extends CI_Controller {
 		}
 		else
 		{
-			$this->form_validation->set_message('cek_password', 'Password Lama Salah');
+			$this->form_validation->set_message('_cek_password', 'Password Lama Salah');
 			return FALSE;
 		}
 	}
 
-	public function cek_nopol($str)
+	public function _cek_nopol($str)
 	{
 	   if (preg_match('#[0-9]#', $str) && preg_match('#[A-Z]#', $str) && strpos($str, " ") == false) {
 	     return TRUE;
 	   }
-	   $this->form_validation->set_message('cek_nopol', 'Nopol polisi tidak sesuai format');
+	   $this->form_validation->set_message('_cek_nopol', 'Nopol polisi tidak sesuai format');
 	   return FALSE;
 	}
 
