@@ -30,6 +30,16 @@ class Members_model extends CI_Model {
 		return $result;
 	}
 
+	function get_all_member()
+	{
+		$this->db->from('members');
+		$this->db->order_by('register', 'asc');
+		$query 	= $this->db->get();
+		$result = $query->result();
+
+		return $result;
+	}
+
 	function update_member($params = array())
 	{
 		$this->db->where('id_member', $params['id_member']);
