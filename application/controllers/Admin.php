@@ -49,4 +49,9 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/view_members');
 		$this->load->view('templates/admin/footer');
 	}
+
+	public function simpan_jadwal()
+	{
+		var_dump($this->input->post());die;
+	}
 }

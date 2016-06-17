@@ -34,6 +34,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- DataTables -->
 <script src="<?php echo base_url().'assets/plugins/datatables/jquery.dataTables.min.js' ?>"></script>
 <script src="<?php echo base_url().'assets/plugins/datatables/dataTables.bootstrap.min.js' ?>"></script>
+<!-- bootstrap datepicker -->
+<script src="<?php echo base_url().'assets/plugins/datepicker/bootstrap-datepicker.js' ?>"></script>
+<!-- bootstrap time picker -->
+<script src="<?php echo base_url().'assets/plugins/timepicker/bootstrap-timepicker.min.js' ?>"></script>
 <!-- SlimScroll -->
 <script src="<?php echo base_url().'assets/plugins/slimScroll/jquery.slimscroll.min.js' ?>"></script>
 <!-- FastClick -->
@@ -43,9 +47,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url().'assets/dist/js/demo.js' ?>"></script>
 <script>
+  
   $(function () {
-    $("#example1").DataTable();
-  });
+    //Table
+    $("#tabelMember").DataTable();
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true,
+      format: 'dd-mm-yyyy',
+    });
+
+    //Timepicker
+    $("#timepicker").timepicker({
+      showInputs: false
+    });
+    });
+
 </script>
 </body>
 </html>

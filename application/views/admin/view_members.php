@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="tabelMember" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Reg</th>

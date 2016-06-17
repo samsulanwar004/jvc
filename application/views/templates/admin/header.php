@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title><?php echo $title; ?> - JVC</title>
+  <title><?php echo $title; ?> - AdminJVC</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -18,6 +18,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/plugins/datatables/dataTables.bootstrap.css' ?>">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="<?php echo base_url().'assets/plugins/datepicker/datepicker3.css' ?>">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="<?php echo base_url().'assets/plugins/timepicker/bootstrap-timepicker.min.css' ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/dist/css/AdminLTE.min.css' ?>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -40,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Logo -->
     <a href="<?php echo base_url().'admin/dashboard' ?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>A</b>JVC</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>Admin</b>JVC</span>
     </a>
@@ -175,17 +179,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<?php echo base_url().'assets/dist/img/user2-160x160.jpg'?>" class="user-image" alt="User Image">
+              <img src="<?php echo base_url().'upload_foto/1606060004.jpg'?>" class="user-image" alt="User Image">
               <span class="hidden-xs">Alexander Pierce</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="<?php echo base_url().'assets/dist/img/user2-160x160.jpg'?>" class="img-circle" alt="User Image">
+                <img src="<?php echo base_url().'upload_foto/1606060004.jpg'?>" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  Sam Rock - Web Developer
+                  <small>Member since Jan. 2013</small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -219,10 +223,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url().'assets/dist/img/user2-160x160.jpg' ?>" class="img-circle" alt="User Image">
+          <img src="<?php echo base_url().'upload_foto/1606060004.jpg' ?>" class="img-circle" alt="User Image" >
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>Sam Rock</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
