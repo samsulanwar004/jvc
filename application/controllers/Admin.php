@@ -7,6 +7,7 @@ class Admin extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('members_model');
+		$this->load->model('proses_model');
 	}
 
 	public function index()
@@ -52,6 +53,37 @@ class Admin extends CI_Controller {
 
 	public function simpan_jadwal()
 	{
-		var_dump($this->input->post());die;
+		$this->form_validation->set_rules('judul', 'Judul Kegiatan', 'trim|required|max_length[20]');
+		$this->form_validation->set_rules('tglJadwal', 'Tanggal', 'required');
+		$this->form_validation->set_rules('jamJadwal', 'Jam', 'required');
+		$this->form_validation->set_rules('deskripsi', 'Deskripsi Kegiatan', 'trim|required|max_length[100]');
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->kalender();
+        }
+        else
+        {
+        	$judul 		= $this->input->post('judul');
+        	$tgl 		= $this->input->post('tglJadwal');
+        	$jam 		= $this->input->post('jamJadwal');
+        	$deskripsi 	= $this->input->post('deskripsi');
+        	$id_jadwal1	= date('ym');
+        	$id_jadwal2 = $this->proses_model->get_idjadwal();
+        	$id_jadwal 	= 'JDL'.sprintf("%06d%04d",intval($id_jadwal1),intval($id_jadwal2['id']));
+
+        	$params = array(
+        		'judul' 	=> ucfirst($judul),
+        		'tanggal' 	=> $tgl,
+        		'jam'		=> $jam,
+        		'deskripsi'	=> ucfirst($deskripsi),
+        		'id_jadwal' => $id_jadwal,
+        		'created_at'=> date('Y-m-d H:i:s')
+        	);
+
+        	$this->proses_model->simpan_jadwal($params);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil simpan jadwal kegiatan</div>');
+        	redirect('admin/kalender');
+        	$this->session->unset_userdata('success_msg');
+        }
 	}
 }

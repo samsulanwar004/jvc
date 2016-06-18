@@ -37,5 +37,10 @@ class Proses_model extends CI_Model {
 		return $row2;
 	}
 
+	function simpan_jadwal($params = array())
+	{
+		return $this->db->insert('jadwal', $params);
+	}
+
 	
 }

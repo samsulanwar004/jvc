@@ -54,12 +54,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     //Date picker
     $('#datepicker').datepicker({
       autoclose: true,
-      format: 'dd-mm-yyyy',
+      format: 'yyyy-mm-dd',
+      todayHighlight: true
     });
 
     //Timepicker
     $("#timepicker").timepicker({
-      showInputs: false
+      showInputs: false,
+      showMeridian: false
     });
     });
 
