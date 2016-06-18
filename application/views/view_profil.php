@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">
             <div class="col-xs-6 col-md-3">
             <a href="#" class="thumbnail">
-                <img class="img-responsive" src="<?php echo base_url().'upload_foto/'.$id.'.jpg'; ?>" alt="Foto Profil" id="myFoto">
+                <img class="img-responsive" src="<?php echo base_url().'upload_foto/'.$foto; ?>" alt="Foto Profil" id="myFoto">
             </a>
             </div>
             <div class="col-md-6">
@@ -118,6 +118,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <input type="text" class="form-control" name="alamat" value="<?php echo $alamat; ?>"  placeholder="Alamat">
                         </div>
                           <input type="hidden" name="idMember" value="<?php echo $id; ?>">
+                          <input type="hidden" name="security" value="<?php echo $key; ?>">
                           <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-floppy-disk"></span> Simpan</button>
                       </form>
                     </div>
@@ -152,6 +153,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <input type="password" class="form-control" name="passwordUlang" placeholder="Ulangi Password Baru">
                         </div>
                           <input type="hidden" name="idMember" value="<?php echo $id; ?>">
+                          <input type="hidden" name="security" value="<?php echo $key; ?>">
                           <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-floppy-disk"></span> Simpan</button>
                       </form>
                     </div>
@@ -176,9 +178,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="form-group">
                               <label for="foto">Upload Foto</label>
                               <input type="file" class="form-control" name="foto">
-                              <p>Max size : 300 KB</p>
+                              <p>Max size : 500 KB</p>
                             </div>
                           <input type="hidden" name="idMember" value="<?php echo $id; ?>">
+                          <input type="hidden" name="security" value="<?php echo $key; ?>">
                           <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-upload"></span> Upload</button>
                         </form>
                     </div>
@@ -199,7 +202,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <h2><span class="glyphicon glyphicon-pushpin"></span> Foto Profil</h2>
                     </div>
                     <div class="modal-body" style="padding:40px 50px;">
-                        <img class="img-responsive" src="<?php echo base_url().'upload_foto/'.$id.'.jpg'; ?>" alt="Foto Profil" >
+                        <center><img class="img-responsive" src="<?php echo base_url().'upload_foto/'.$foto; ?>" alt="Foto Profil" ></center>
                     </div>
                     <div class="modal-footer">
                       <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Batal</button>
