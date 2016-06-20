@@ -22,6 +22,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="<?php echo base_url().'assets/plugins/datepicker/datepicker3.css' ?>">
   <!-- Bootstrap time Picker -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/plugins/timepicker/bootstrap-timepicker.min.css' ?>">
+  <!--Event Calender-->
+  <link rel="stylesheet" href="<?php echo base_url().'assets/css/eventCalendar.css' ?>">
+  <link rel="stylesheet" href="<?php echo base_url().'assets/css/eventCalendar_theme_responsive.css' ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url().'assets/dist/css/AdminLTE.min.css' ?>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins

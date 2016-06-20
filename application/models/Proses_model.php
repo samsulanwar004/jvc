@@ -42,5 +42,24 @@ class Proses_model extends CI_Model {
 		return $this->db->insert('jadwal', $params);
 	}
 
-	
+	function get_jadwal_by_tgl($params = array())
+	{
+		$awal = $params['tgl_awal'];
+		$akhir = $params['tgl_akhir'];
+		$this->db->from('jadwal');
+		$this->db->where('tanggal BETWEEN "'.$awal.'" AND "'.$akhir.'"');
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return $result;
+	}
+
+	function get_jadwal()
+	{
+		$this->db->from('jadwal');
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return $result;
+	}
 }

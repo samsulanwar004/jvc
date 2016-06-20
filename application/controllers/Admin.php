@@ -25,7 +25,11 @@ class Admin extends CI_Controller {
 
 	public function kalender()
 	{
-		$data['title'] = "Kalender";
+		$jadwal = $this->proses_model->get_jadwal();
+		$data = array(
+			'title' => "Kalender",
+			'jadwal' => $jadwal
+		);
 		$this->load->view('templates/admin/header', $data);
 		$this->load->view('admin/view_kalender');
 		$this->load->view('templates/admin/footer');
@@ -73,8 +77,7 @@ class Admin extends CI_Controller {
 
         	$params = array(
         		'judul' 	=> ucfirst($judul),
-        		'tanggal' 	=> $tgl,
-        		'jam'		=> $jam,
+        		'tanggal' 	=> $tgl.' '.$jam,
         		'deskripsi'	=> ucfirst($deskripsi),
         		'id_jadwal' => $id_jadwal,
         		'created_at'=> date('Y-m-d H:i:s')

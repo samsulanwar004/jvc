@@ -23,6 +23,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Custom Fonts -->
     <link href="<?php echo base_url().'assets/font-awesome/css/font-awesome.min.css' ?>" rel="stylesheet" type="text/css">
 
+    <!--Event Calender-->
+      <link rel="stylesheet" href="<?php echo base_url().'assets/css/eventCalendar.css' ?>">
+      <link rel="stylesheet" href="<?php echo base_url().'assets/css/eventCalendar_theme_responsive.css' ?>">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

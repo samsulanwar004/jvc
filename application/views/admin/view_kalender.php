@@ -76,10 +76,68 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">Daftar Kegiatan</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="tabelMember" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Judul</th>
+                  <th>Tanggal</th>
+                  <th>Jam</th>
+                  <th>Deskripsi</th>
+                  <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                  foreach ($jadwal as $value) {
+                    $tglArray = explode(' ', $value->tanggal);
+                ?>
+                <tr>
+                  <td><?php echo $value->judul; ?></td>
+                  <td><?php echo nice_date($tglArray[0], 'd-m-Y'); ?></td>
+                  <td><?php echo $tglArray[1]; ?></td>
+                  <td><?php echo $value->deskripsi; ?></td>
+                  <td>
+                    <div class="tools">
+                      <a href="#"><i class="fa fa-edit"></i></a>
+                      <a href="#"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                  </td>
+                </tr>
+                <?php
+                  }
+                ?>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Judul</th>
+                  <th>Tanggal</th>
+                  <th>Jam</th>
+                  <th>Deskripsi</th>
+                  <th>Aksi</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
         </div>
         <!-- /.col (left) -->
         <div class="col-md-6">
-
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">Jadwal Kegiatan</h3>
+            </div>
+            <div class="box-body">
+              <div id="eventCalendarHumanDate"></div>
+            </div>
+          </div>
         </div>
         <!-- /.col (right) -->
       </div>

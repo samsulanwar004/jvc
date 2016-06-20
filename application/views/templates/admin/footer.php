@@ -42,6 +42,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url().'assets/plugins/slimScroll/jquery.slimscroll.min.js' ?>"></script>
 <!-- FastClick -->
 <script src="<?php echo base_url().'assets/plugins/fastclick/fastclick.js' ?>"></script>
+<!-- Event Calender -->
+<script src="<?php echo base_url().'assets/js/jquery.eventCalendar.js' ?>"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url().'assets/dist/js/app.min.js' ?>"></script>
 <!-- AdminLTE for demo purposes -->
@@ -63,7 +65,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       showInputs: false,
       showMeridian: false
     });
+    //Kalender
+    $("#eventCalendarHumanDate").eventCalendar({
+        eventsjson: "<?php echo base_url().'api/jadwal/'; ?>",
+        jsonDateFormat: "human"  // 'YYYY-MM-DD HH:MM:SS'
     });
+  });
 
 </script>
 </body>
