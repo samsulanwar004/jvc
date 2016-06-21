@@ -70,7 +70,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         eventsjson: "<?php echo base_url().'api/jadwal/'; ?>",
         jsonDateFormat: "human"  // 'YYYY-MM-DD HH:MM:SS'
     });
+    $( window ).load( counter );
   });
+
+
+  $( window ).load(function() {
+    $.ajax({
+        type: "GET",
+        url: "<?php echo base_url().'api/counter/' ?>"
+        }).done(function( data ) {
+        $('#counter').html(data);
+    });
+
+    $.ajax({
+      type: "GET",
+      url: "<?php echo base_url().'api/members/' ?>"
+      }).done(function( data ) {
+      $('#registrasi').html(data);
+    });
+  });
+
+
 
 </script>
 </body>

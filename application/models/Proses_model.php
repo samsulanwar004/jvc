@@ -62,4 +62,17 @@ class Proses_model extends CI_Model {
 
 		return $result;
 	}
+
+	function get_count_members()
+	{
+		$this->db->select('count(*) as count');
+		$this->db->from('members');
+		$this->db->where('status', 1);
+		$this->db->or_where('status', 2);
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
 }

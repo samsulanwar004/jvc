@@ -36,6 +36,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 jsonDateFormat: "human"  // 'YYYY-MM-DD HH:MM:SS'
             });
         });
+
+        $( window ).load(function() {
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url().'api/counter/' ?>"
+                }).done(function( data ) {
+                $('#counter').html(data);
+            });
+        });
     </script>
 
 </body>

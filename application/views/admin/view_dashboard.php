@@ -24,9 +24,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
+              <h3><div id="registrasi"></div></h3>
 
-              <p>User Registrations</p>
+              <p>Member Registrasi</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -39,9 +39,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3><div id="counter"></div></h3>
 
-              <p>Unique Visitors</p>
+              <p>Pengunjung</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
