@@ -13,7 +13,7 @@ class Members extends CI_Controller {
 	public function aktif($id, $code)
 	{
 		$member = $this->members_model->get_member($id);
-		if ($member->active_code === $code)
+		if (isset($member) && $member->status == 0 && $member->active_code === $code)
 		{
 			$params = array(
 				'id_member' => $id,
