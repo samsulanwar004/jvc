@@ -46,6 +46,12 @@ class Members_model extends CI_Model {
 		$this->db->update('members', $params);
 	}
 
+	function hapus_member($id_member)
+	{
+		$this->db->where('id_member', $id_member);
+		$this->db->delete('members');
+	}
+
 	function get_idmember()
 	{
 		$this->db->select("id");

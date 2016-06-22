@@ -48,11 +48,63 @@ class Admin extends CI_Controller {
 		$members = $this->members_model->get_all_member();
 		$data = array(
 			'title'		=> "Members",
-			'members' 	=> $members
+			'members' 	=> $members,
+			'key'		=> $this->config->item('encryption_key')
 		);
 		$this->load->view('templates/admin/header', $data);
 		$this->load->view('admin/view_members');
 		$this->load->view('templates/admin/footer');
+	}
+
+	public function edit_member()
+	{
+		$this->form_validation->set_rules('register', 'Nomor Register', 'trim|required|min_length[3]|max_length[3]|callback__cek_reg');
+		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_security');
+
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->session->unset_userdata('success_msg');
+        	$this->members();
+        }
+        else
+        {
+        	$id_member 	= $this->input->post('idMember');
+        	$register 	= $this->input->post('register');
+        	$jabatan 	= $this->input->post('jabatan');
+        	$status 	= $this->input->post('status');
+
+        	$params = array(
+        		'id_member' 	=> $id_member,
+        		'register' 		=> $register,
+        		'jabatan' 		=> $jabatan,
+        		'status' 		=> $status,
+        		'modified_in' 	=> date('Y-m-d H:i:s')
+        	);
+
+        	$this->members_model->update_member($params);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Update Member</div>');
+        	redirect('admin/members');
+        	$this->session->unset_userdata('success_msg');
+        }
+	}
+
+	public function hapus_member()
+	{
+		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_security');
+
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->session->unset_userdata('success_msg');
+        	$this->members();
+        }
+        else
+        {
+        	$id_member 	= $this->input->post('idMember');
+        	$this->members_model->hapus_member($id_member);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Hapus Member</div>');
+        	redirect('admin/members');
+        	$this->session->unset_userdata('success_msg');
+        }
 	}
 
 	public function simpan_jadwal()
@@ -88,5 +140,26 @@ class Admin extends CI_Controller {
         	redirect('admin/kalender');
         	$this->session->unset_userdata('success_msg');
         }
+	}
+
+	public function _cek_reg($str)
+	{
+	   if (preg_match('#[0-9]#', $str) && strpos($str, " ") == false) {
+	     return TRUE;
+	   }
+	   $this->form_validation->set_message('_cek_reg', 'Nomor Registrasi tidak sesuai format');
+	   return FALSE;
+	}
+
+	public function _cek_security($str)
+	{
+		$id 	= $this->input->post('idMember');
+		$enkrip = sha1($id.$this->config->item('encryption_key'));
+		if ($str === $enkrip)
+		{
+			return TRUE;
+		}
+		$this->form_validation->set_message('_cek_security', 'Key Security tidak benar');
+	   	return FALSE;
 	}
 }

@@ -68,12 +68,14 @@ class Profil extends CI_Controller {
         	$namaBlkng 	= $this->input->post('namaBelakang');
         	$noTelpon 	= $this->input->post('noTelpon');
         	$alamat 	= $this->input->post('alamat');
+        	$nopol		= $this->input->post('nopol');
 
         	$params = array(
         		'id_member' 	=> $idMember,
         		'nama' 			=> ucfirst($namaDepan).' '.ucfirst($namaBlkng),
         		'noTelpon' 		=> $noTelpon,
         		'alamat' 		=> $alamat,
+        		'nopol'			=> strtoupper($nopol),
         		'modified_in'	=> date('Y-m-d H:i:s')
         	);
         	
@@ -135,7 +137,7 @@ class Profil extends CI_Controller {
 
 	public function _cek_nopol($str)
 	{
-	   if (preg_match('#[0-9]#', $str) && preg_match('#[A-Z]#', $str) && strpos($str, " ") == false) {
+	   if (preg_match('#[0-9]#', $str) && preg_match('#[a-zA-Z]#', $str) && strpos($str, " ") == false) {
 	     return TRUE;
 	   }
 	   $this->form_validation->set_message('_cek_nopol', 'Nopol polisi tidak sesuai format');

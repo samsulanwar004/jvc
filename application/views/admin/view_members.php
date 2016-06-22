@@ -17,6 +17,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </section>
     <!-- Main content -->
     <section class="content">
+    <?php 
+      echo validation_errors('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>', '</div>'); 
+      echo $this->session->flashdata('success_msg');
+    ?>
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -64,11 +68,88 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </td>
                   <td>
                     <div class="tools">
-                      <a href="#"><i class="fa fa-edit"></i></a>
-                      <a href="#"><i class="fa fa-trash-o"></i></a>
+                      <a href="#" id="myEditMember"><i class="fa fa-edit"></i></a>
+                      <a href="#" id="myHapusMember"><i class="fa fa-trash-o"></i></a>
                     </div>
                   </td>
                 </tr>
+                <!--Modal Edit Member -->
+                <div class="modal fade" id="myModalEditMember">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Edit Member</h4>
+                      </div>
+                      <div class="modal-body">
+                        <?php echo form_open('admin/edit_member'); ?>
+                          <div class="form-group">
+                            <label for="register" class="control-label">Nomor Register</label>
+                            <input type="text" class="form-control" name="register" placeholder="000" value="<?php echo $member->register; ?>">
+                          </div>
+                          <div class="form-group">
+                            <label for="jabatan" class="control-label">Jabatan</label>
+                            <select class="form-control" name="jabatan">
+                            <?php echo '<option>'.$member->jabatan.'</option>' ?>
+                              <option>Anggota</option>
+                              <option>Ketua</option>
+                              <option>Wakil Ketua</option>
+                              <option>Sekretaris</option>
+                              <option>Bendahara</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="status" class="control-label">Hak Akses</label>
+                            <select class="form-control" name="status">
+                            <?php
+                            if ($member->status == 1) {echo '<option value="1">Pengguna</option>';}
+                            elseif ($member->status == 2) {echo '<option value="2">Admin</option>';}
+                            else {echo '<option value="3">Banned</option>';}
+                            ?>
+                              <option value="1">Pengguna</option>
+                              <option value="2">Admin</option>
+                              <option value="3">Banned</option>
+                            </select>
+                          </div>                      
+                      </div>
+                      <div class="modal-footer">
+                        <input type="hidden" name="idMember" value="<?php echo $member->id_member; ?>">
+                        <input type="hidden" name="security" value="<?php echo sha1($member->id_member.$key)?>">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                      </div>
+                      </form>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+                <!--Modal Hapus Member -->
+                <div class="modal fade modal-warning" id="myModalHapusMember">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Peringatan!</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>Apakah anda ingin hapus member <?php echo $member->nama; ?> ?</p>
+                      </div>
+                      <div class="modal-footer">
+                      <?php echo form_open('admin/hapus_member'); ?>
+                        <input type="hidden" name="idMember" value="<?php echo $member->id_member; ?>">
+                        <input type="hidden" name="security" value="<?php echo sha1($member->id_member.$key)?>">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-outline">Hapus</button>
+                      </form>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
                 <?php
                   }
                 ?>
@@ -101,3 +182,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  
