@@ -28,17 +28,6 @@ $(document).ready(function(){
     });
 });
 
-$(document).ready(function(){
-    $("#myEditMember").click(function(){
-        $("#myModalEditMember").modal();
-    });
-});
-
-$(document).ready(function(){
-    $("#myHapusMember").click(function(){
-        $("#myModalHapusMember").modal();
-    });
-});
 
 $(window).scroll(function() {
   if ($(document).scrollTop() > 1) {

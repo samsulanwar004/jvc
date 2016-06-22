@@ -47,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </thead>
                 <tbody>
                 <?php
+                  $no = 1;
                   foreach ($members as $member) {
                 ?>
                 <tr>
@@ -68,13 +69,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </td>
                   <td>
                     <div class="tools">
-                      <a href="#" id="myEditMember"><i class="fa fa-edit"></i></a>
-                      <a href="#" id="myHapusMember"><i class="fa fa-trash-o"></i></a>
+                      <a href="#" data-toggle="modal" data-target="#myModalEditMember<?php echo $no; ?>"><i class="fa fa-edit"></i></a>
+                      <a href="#" data-toggle="modal" data-target="#myModalHapusMember<?php echo $no; ?>"><i class="fa fa-trash-o"></i></a>
                     </div>
                   </td>
                 </tr>
                 <!--Modal Edit Member -->
-                <div class="modal fade" id="myModalEditMember">
+                <div class="modal fade" id="myModalEditMember<?php echo $no; ?>">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -126,7 +127,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <!-- /.modal-dialog -->
                 </div>
                 <!--Modal Hapus Member -->
-                <div class="modal fade modal-warning" id="myModalHapusMember">
+                <div class="modal fade modal-warning" id="myModalHapusMember<?php echo $no; ?>">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -151,6 +152,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <!-- /.modal-dialog -->
                 </div>
                 <?php
+                  $no++;
                   }
                 ?>
                 </tbody>

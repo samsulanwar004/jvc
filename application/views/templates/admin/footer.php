@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url().'assets/dist/js/app.min.js' ?>"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url().'assets/dist/js/demo.js' ?>"></script>
-<script src="<?php echo base_url().'assets/js/custom.js' ?>"></script>
+
 <script>
   
   $(function () {
