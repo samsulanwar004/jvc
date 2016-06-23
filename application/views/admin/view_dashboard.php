@@ -24,14 +24,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3><div id="registrasi"></div></h3>
+              <h3><div id="registrasi-widget"></div></h3>
 
               <p>Member Registrasi</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo base_url().'admin/members' ?>" class="small-box-footer">Detail info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -46,7 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer">Detail info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

@@ -87,7 +87,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       type: "GET",
       url: "<?php echo base_url().'api/members/' ?>"
       }).done(function( data ) {
-      $('#registrasi').html(data);
+      $('#registrasi-widget').html(data);
+       $('#registrasi').html(data);
+    });
+
+    $.ajax({
+      type: "GET",
+      url: "<?php echo base_url().'api/kalender/' ?>"
+      }).done(function( data ) {
+       $('#kalender').html(data);
     });
   });
 

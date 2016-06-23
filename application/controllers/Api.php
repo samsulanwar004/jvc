@@ -66,4 +66,10 @@ class Api extends CI_Controller {
         $members = $this->proses_model->get_count_members();
         echo $members->count;
     }
+
+    public function kalender()
+    {
+        $kalender = $this->proses_model->get_count_kalender();
+        echo $kalender->count;
+    }
 }

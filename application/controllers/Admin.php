@@ -28,7 +28,8 @@ class Admin extends CI_Controller {
 		$jadwal = $this->proses_model->get_jadwal();
 		$data = array(
 			'title' => "Kalender",
-			'jadwal' => $jadwal
+			'jadwal' => $jadwal,
+			'key'		=> $this->config->item('encryption_key')
 		);
 		$this->load->view('templates/admin/header', $data);
 		$this->load->view('admin/view_kalender');
@@ -123,9 +124,10 @@ class Admin extends CI_Controller {
         	$tgl 		= $this->input->post('tglJadwal');
         	$jam 		= $this->input->post('jamJadwal');
         	$deskripsi 	= $this->input->post('deskripsi');
-        	$id_jadwal1	= date('ym');
+        	$tglArray	= explode('-', $tgl);
+        	$id_jadwal1	= $tglArray[0].$tglArray[1].$tglArray[2];
         	$id_jadwal2 = $this->proses_model->get_idjadwal();
-        	$id_jadwal 	= 'JDL'.sprintf("%06d%04d",intval($id_jadwal1),intval($id_jadwal2['id']));
+        	$id_jadwal 	= sprintf("%06d%04d",intval($id_jadwal1),intval($id_jadwal2['id']));
 
         	$params = array(
         		'judul' 	=> ucfirst($judul),
@@ -137,6 +139,56 @@ class Admin extends CI_Controller {
 
         	$this->proses_model->simpan_jadwal($params);
         	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil simpan jadwal kegiatan</div>');
+        	redirect('admin/kalender');
+        	$this->session->unset_userdata('success_msg');
+        }
+	}
+
+	public function edit_jadwal()
+	{
+		$this->form_validation->set_rules('judul', 'Judul Kegiatan', 'trim|required|max_length[20]');
+		$this->form_validation->set_rules('deskripsi', 'Deskripsi Kegiatan', 'trim|required|max_length[100]');
+		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jadwal');
+
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->session->unset_userdata('success_msg');
+        	$this->kalender();
+        }
+        else
+        {
+        	$id_jadwal 	= $this->input->post('idJadwal');
+        	$judul 		= $this->input->post('judul');
+        	$deskripsi 	= $this->input->post('deskripsi');
+
+        	$params = array(
+        		'id_jadwal' 	=> $id_jadwal,
+        		'judul' 		=> $judul,
+        		'deskripsi' 	=> $deskripsi,
+        		'modified_in' 	=> date('Y-m-d H:i:s')
+        	);
+
+        	$this->proses_model->update_jadwal($params);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Update Kegiatan</div>');
+        	redirect('admin/kalender');
+        	$this->session->unset_userdata('success_msg');
+        }
+	}
+
+	public function hapus_jadwal()
+	{
+		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jadwal');
+
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->session->unset_userdata('success_msg');
+        	$this->kalender();
+        }
+        else
+        {
+        	$id_jadwal 	= $this->input->post('idJadwal');
+        	$this->proses_model->hapus_jadwal($id_jadwal);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Hapus Kegiatan</div>');
         	redirect('admin/kalender');
         	$this->session->unset_userdata('success_msg');
         }
@@ -160,6 +212,18 @@ class Admin extends CI_Controller {
 			return TRUE;
 		}
 		$this->form_validation->set_message('_cek_security', 'Key Security tidak benar');
+	   	return FALSE;
+	}
+
+	public function _cek_jadwal($str)
+	{
+		$id 	= $this->input->post('idJadwal');
+		$enkrip = sha1($id.$this->config->item('encryption_key'));
+		if ($str === $enkrip)
+		{
+			return TRUE;
+		}
+		$this->form_validation->set_message('_cek_jadwal', 'Key Security tidak benar');
 	   	return FALSE;
 	}
 }

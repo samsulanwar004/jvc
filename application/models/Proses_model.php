@@ -57,6 +57,7 @@ class Proses_model extends CI_Model {
 	function get_jadwal()
 	{
 		$this->db->from('jadwal');
+		$this->db->order_by('id_jadwal', 'DESC');
 		$query = $this->db->get();
 		$result = $query->result();
 
@@ -73,6 +74,29 @@ class Proses_model extends CI_Model {
 		$result = $query->row();
 
 		return $result;
+	}
+
+	function get_count_kalender()
+	{
+		$this->db->select('count(*) as count');
+		$this->db->from('jadwal');
+		$this->db->where('tanggal >= NOW()');
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
+	function hapus_jadwal($id_jadwal)
+	{
+		$this->db->where('id_jadwal', $id_jadwal);
+		$this->db->delete('jadwal');
+	}
+
+	function update_jadwal($params = array())
+	{
+		$this->db->where('id_jadwal', $params['id_jadwal']);
+		$this->db->update('jadwal', $params);
 	}
 
 }
