@@ -178,7 +178,6 @@ class Profil extends CI_Controller {
 
 	        $this->load->library('upload', $config);
 
-
 	        if ( ! $this->upload->do_upload('foto'))
 	        {
 	                $error = $this->upload->display_errors();

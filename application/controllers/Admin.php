@@ -101,6 +101,11 @@ class Admin extends CI_Controller {
         else
         {
         	$id_member 	= $this->input->post('idMember');
+        	$member 	= $this->members_model->get_member($id_member);
+        	if ($member->foto == TRUE)
+        	{
+        		unlink("upload_foto/".$member->foto);
+        	}
         	$this->members_model->hapus_member($id_member);
         	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Hapus Member</div>');
         	redirect('admin/members');
