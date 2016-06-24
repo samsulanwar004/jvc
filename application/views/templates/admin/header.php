@@ -127,10 +127,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        <li>
-          <a href="<?php echo base_url().'admin/dashboard' ?>">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url().'admin/dashboard' ?>"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+            <li><a href="<?php echo base_url() ?>"><i class="fa fa-circle-o"></i> Lihat situs</a></li>
+          </ul>
         </li>
         <li>
           <a href="<?php echo base_url().'admin/kalender' ?>">
@@ -148,6 +152,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <a href="<?php echo base_url().'admin/members' ?>">
             <i class="fa fa-users"></i> <span>Members</span>
             <small class="label pull-right bg-green"><div id="registrasi"></div></small>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo base_url().'admin/jabatan' ?>">
+            <i class="fa fa-briefcase"></i> <span>Jabatan</span>
+            <small class="label pull-right bg-green"><div id="jabatan"></div></small>
           </a>
         </li>
       </ul>

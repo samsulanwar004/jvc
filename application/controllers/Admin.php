@@ -83,7 +83,7 @@ class Admin extends CI_Controller {
         	);
 
         	$this->members_model->update_member($params);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Update Member</div>');
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update member</div>');
         	redirect('admin/members');
         	$this->session->unset_userdata('success_msg');
         }
@@ -107,7 +107,7 @@ class Admin extends CI_Controller {
         		unlink("upload_foto/".$member->foto);
         	}
         	$this->members_model->hapus_member($id_member);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Hapus Member</div>');
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus member</div>');
         	redirect('admin/members');
         	$this->session->unset_userdata('success_msg');
         }
@@ -168,13 +168,13 @@ class Admin extends CI_Controller {
 
         	$params = array(
         		'id_jadwal' 	=> $id_jadwal,
-        		'judul' 		=> $judul,
-        		'deskripsi' 	=> $deskripsi,
+        		'judul' 		=> ucfirst($judul),
+        		'deskripsi' 	=> ucfirst($deskripsi),
         		'modified_in' 	=> date('Y-m-d H:i:s')
         	);
 
         	$this->proses_model->update_jadwal($params);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Update Kegiatan</div>');
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update kegiatan</div>');
         	redirect('admin/kalender');
         	$this->session->unset_userdata('success_msg');
         }
@@ -193,8 +193,101 @@ class Admin extends CI_Controller {
         {
         	$id_jadwal 	= $this->input->post('idJadwal');
         	$this->proses_model->hapus_jadwal($id_jadwal);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil Hapus Kegiatan</div>');
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus kegiatan</div>');
         	redirect('admin/kalender');
+        	$this->session->unset_userdata('success_msg');
+        }
+	}
+
+	public function jabatan()
+	{
+		$jabatan = $this->proses_model->get_jabatan();
+		$data = array(
+			'title' 	=> "Jabatan",
+			'jabatan' 	=> $jabatan,
+			'key'		=> $this->config->item('encryption_key')
+		);
+		$this->load->view('templates/admin/header', $data);
+		$this->load->view('admin/view_jabatan');
+		$this->load->view('templates/admin/footer');
+	}
+
+	public function simpan_jabatan()
+	{
+		$this->form_validation->set_rules('jabatan', 'Jabatan', 'trim|required|max_length[50]');
+		$this->form_validation->set_rules('deskripsi', 'Deskripsi Jabatan', 'trim|required|max_length[100]');
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->jabatan();
+        }
+        else
+        {
+        	$jabatan	= $this->input->post('jabatan');
+        	$deskripsi 	= $this->input->post('deskripsi');
+        	$id_jbtn1	= date('Ymd');
+        	$id_jbtn2 	= $this->proses_model->get_idjabatan();
+        	$id_jbtn 	= sprintf("%06d%04d",intval($id_jbtn1),intval($id_jbtn2['id']));
+
+        	$params = array(
+        		'jabatan' 		=> ucfirst($jabatan),
+        		'deskripsi'		=> ucfirst($deskripsi),
+        		'id_jabatan' 	=> $id_jbtn,
+        		'created_at'	=> date('Y-m-d H:i:s')
+        	);
+
+        	$this->proses_model->simpan_jabatan($params);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil simpan jabatan</div>');
+        	redirect('admin/jabatan');
+        	$this->session->unset_userdata('success_msg');
+        }
+	}
+
+	public function edit_jabatan()
+	{
+		$this->form_validation->set_rules('jabatan', 'Jabatan', 'trim|required|max_length[50]');
+		$this->form_validation->set_rules('deskripsi', 'Deskripsi Jabatan', 'trim|required|max_length[100]');
+		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jabatan');
+
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->session->unset_userdata('success_msg');
+        	$this->jabatan();
+        }
+        else
+        {
+        	$id_jabatan 	= $this->input->post('idJabatan');
+        	$jabatan		= $this->input->post('jabatan');
+        	$deskripsi 		= $this->input->post('deskripsi');
+
+        	$params = array(
+        		'id_jabatan' 	=> $id_jabatan,
+        		'jabatan' 		=> ucfirst($jabatan),
+        		'deskripsi' 	=> ucfirst($deskripsi),
+        		'modified_in' 	=> date('Y-m-d H:i:s')
+        	);
+
+        	$this->proses_model->update_jabatan($params);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update jabatan</div>');
+        	redirect('admin/jabatan');
+        	$this->session->unset_userdata('success_msg');
+        }
+	}
+
+	public function hapus_jabatan()
+	{
+		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jabatan');
+
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->session->unset_userdata('success_msg');
+        	$this->jabatan();
+        }
+        else
+        {
+        	$id_jabatan = $this->input->post('idJabatan');
+        	$this->proses_model->hapus_jabatan($id_jabatan);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus jabatan</div>');
+        	redirect('admin/jabatan');
         	$this->session->unset_userdata('success_msg');
         }
 	}
@@ -229,6 +322,18 @@ class Admin extends CI_Controller {
 			return TRUE;
 		}
 		$this->form_validation->set_message('_cek_jadwal', 'Key Security tidak benar');
+	   	return FALSE;
+	}
+
+	public function _cek_jabatan($str)
+	{
+		$id 	= $this->input->post('idJabatan');
+		$enkrip = sha1($id.$this->config->item('encryption_key'));
+		if ($str === $enkrip)
+		{
+			return TRUE;
+		}
+		$this->form_validation->set_message('_cek_jabatan', 'Key Security tidak benar');
 	   	return FALSE;
 	}
 }

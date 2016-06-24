@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.3.3
     </div>
-    <strong>Copyright &copy; 2016 editing by <a href="http://jvc.or.id">JVC</a>.</strong> All rights
+    <strong>Copyright &copy; 2016 editing by <a href="<?php echo base_url(); ?>">JVC</a>.</strong> All rights
     reserved.
   </footer>
 
@@ -96,6 +96,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       url: "<?php echo base_url().'api/kalender/' ?>"
       }).done(function( data ) {
        $('#kalender').html(data);
+    });
+
+    $.ajax({
+      type: "GET",
+      url: "<?php echo base_url().'api/jabatan/' ?>"
+      }).done(function( data ) {
+       $('#jabatan').html(data);
     });
   });
 

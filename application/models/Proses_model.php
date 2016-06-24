@@ -37,9 +37,48 @@ class Proses_model extends CI_Model {
 		return $row2;
 	}
 
+	function get_idjabatan()
+	{
+		$this->db->select("id");
+		$this->db->from("generatorid");
+		$this->db->where("idtype","idjabatan");
+		$this->db->where("TO_DAYS(this_date)=TO_DAYS(now())");
+		$query=$this->db->get();
+
+		if($query->num_rows() <=0)
+		{
+			$this->db->set("id",1);
+			$this->db->set("this_date","date(now())",FALSE);
+			$this->db->where("idtype","idjabatan");
+			$this->db->update("generatorid");
+		}
+		else
+		{
+			$this->db->where("idtype","idjabatan");
+			$this->db->from("generatorid");
+			$query2=$this->db->get();
+			$row=$query2->row_array();
+			$this->db->set("id",$row['id']."+1",FALSE);
+			$this->db->where("idtype","idjabatan");
+			$this->db->update("generatorid");
+		}
+		$this->db->select("id");
+		$this->db->from("generatorid");
+		$this->db->where("idtype","idjabatan");
+		$query3=$this->db->get();
+		$row2=$query3->row_array();
+		//var_dump($row2);exit;
+		return $row2;
+	}
+
 	function simpan_jadwal($params = array())
 	{
 		return $this->db->insert('jadwal', $params);
+	}
+
+	function simpan_jabatan($params = array())
+	{
+		return $this->db->insert('jabatan', $params);
 	}
 
 	function get_jadwal_by_tgl($params = array())
@@ -58,6 +97,15 @@ class Proses_model extends CI_Model {
 	{
 		$this->db->from('jadwal');
 		$this->db->order_by('id_jadwal', 'DESC');
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return $result;
+	}
+
+	function get_jabatan()
+	{
+		$this->db->from('jabatan');
 		$query = $this->db->get();
 		$result = $query->result();
 
@@ -87,6 +135,16 @@ class Proses_model extends CI_Model {
 		return $result;
 	}
 
+	function get_count_jabatan()
+	{
+		$this->db->select('count(*) as count');
+		$this->db->from('jabatan');
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
 	function hapus_jadwal($id_jadwal)
 	{
 		$this->db->where('id_jadwal', $id_jadwal);
@@ -97,6 +155,18 @@ class Proses_model extends CI_Model {
 	{
 		$this->db->where('id_jadwal', $params['id_jadwal']);
 		$this->db->update('jadwal', $params);
+	}
+
+	function hapus_jabatan($id_jabatan)
+	{
+		$this->db->where('id_jabatan', $id_jabatan);
+		$this->db->delete('jabatan');
+	}
+
+	function update_jabatan($params = array())
+	{
+		$this->db->where('id_jabatan', $params['id_jabatan']);
+		$this->db->update('jabatan', $params);
 	}
 
 }
