@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                   </td>
                 </tr>
-                <!--Modal Edit Kalender -->
+                <!--Modal Edit Jabatan -->
                 <div class="modal fade" id="myModalEditJabatan<?php echo $no; ?>">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -116,7 +116,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </div>
                   <!-- /.modal-dialog -->
                 </div>
-                <!--Modal Hapus Kalender -->
+                <!--Modal Hapus Jabatan -->
                 <div class="modal fade modal-warning" id="myModalHapusJabatan<?php echo $no; ?>">
                   <div class="modal-dialog">
                     <div class="modal-content">

@@ -28,7 +28,8 @@ class Api extends CI_Controller {
             $temp = array(
                 "date" => $value->tanggal,
                 "title" => $value->judul,
-                "description" => $value->deskripsi);
+                "description" => $value->deskripsi
+            );
             array_push($arr, $temp);
         }
         $data = json_encode($arr);
@@ -77,5 +78,11 @@ class Api extends CI_Controller {
     {
         $jabatan = $this->proses_model->get_count_jabatan();
         echo $jabatan->count;
+    }
+
+    public function noreg()
+    {
+        $noreg = $this->proses_model->get_count_noreg();
+        echo $noreg->count;
     }
 }

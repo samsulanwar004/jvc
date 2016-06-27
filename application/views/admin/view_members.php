@@ -92,25 +92,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <div class="form-group">
                             <label for="jabatan" class="control-label">Jabatan</label>
                             <select class="form-control" name="jabatan">
-                            <?php echo '<option>'.$member->jabatan.'</option>' ?>
-                              <option>Anggota</option>
-                              <option>Ketua</option>
-                              <option>Wakil Ketua</option>
-                              <option>Sekretaris</option>
-                              <option>Bendahara</option>
+                            <?php 
+                              echo '<option>'.$member->jabatan.'</option>';
+                              foreach ($jabatan as $value) {
+                                echo '<option>'.$value->jabatan.'</option>';
+                              }
+                            ?>
                             </select>
                           </div>
                           <div class="form-group">
                             <label for="status" class="control-label">Hak Akses</label>
                             <select class="form-control" name="status">
-                            <?php
-                            if ($member->status == 1) {echo '<option value="1">Pengguna</option>';}
-                            elseif ($member->status == 2) {echo '<option value="2">Admin</option>';}
-                            else {echo '<option value="3">Banned</option>';}
-                            ?>
-                              <option value="1">Pengguna</option>
-                              <option value="2">Admin</option>
-                              <option value="3">Banned</option>
+                              <option value="1" <?php if ($member->status == 1){echo"selected";} ?>>Pengguna</option>
+                              <option value="2" <?php if ($member->status == 2){echo"selected";} ?>>Admin</option>
+                              <option value="3" <?php if ($member->status == 3){echo"selected";} ?>>Banned</option>
                             </select>
                           </div>                      
                       </div>

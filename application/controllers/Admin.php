@@ -47,9 +47,11 @@ class Admin extends CI_Controller {
 	public function members()
 	{
 		$members = $this->members_model->get_all_member();
+		$jabatan = $this->proses_model->get_jabatan();
 		$data = array(
 			'title'		=> "Members",
 			'members' 	=> $members,
+			'jabatan'	=> $jabatan,
 			'key'		=> $this->config->item('encryption_key')
 		);
 		$this->load->view('templates/admin/header', $data);
@@ -292,6 +294,76 @@ class Admin extends CI_Controller {
         }
 	}
 
+	public function noreg()
+	{
+		$noreg = $this->proses_model->get_noreg();
+		$data = array(
+			'title' 	=> "Noreg",
+			'noreg' 	=> $noreg,
+			'key'		=> $this->config->item('encryption_key')
+		);
+		$this->load->view('templates/admin/header', $data);
+		$this->load->view('admin/view_noreg');
+		$this->load->view('templates/admin/footer');
+	}
+
+	public function simpan_noreg()
+	{
+		$this->form_validation->set_rules('jumlah', 'Jumlah Register', 'trim|required|max_length[3]|numeric');
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->noreg();
+        }
+        else
+        {
+        	$jumlah		= $this->input->post('jumlah');
+        	$noAkhir	= $this->proses_model->get_max_noreg();
+        	$urut 		= substr($noAkhir->noreg, 1);
+        	$reg 		= (int) $urut;
+        	$i 			= $reg+1;
+        	$jum 		= $jumlah+$reg;
+
+        	for ($i=$i; $i <= $jum; $i++) { 
+	        	$i		= str_pad($i, 3, "0", STR_PAD_LEFT);
+        		$params = array(
+	        		'noreg' 		=> $i,
+	        		'status'		=> 0
+        		);
+        		$this->proses_model->simpan_noreg($params);
+        	}
+        	
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil buat nomor register</div>');
+        	redirect('admin/noreg');
+        	$this->session->unset_userdata('success_msg');
+        }
+	}
+
+	public function edit_noreg()
+	{
+		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_noreg');
+
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->session->unset_userdata('success_msg');
+        	$this->noreg();
+        }
+        else
+        {
+        	$id_reg 	= $this->input->post('idNoreg');
+        	$status		= $this->input->post('status');
+
+        	$params = array(
+        		'id_reg' 	=> $id_reg,
+        		'status' 	=> $status
+        	);
+
+        	$this->proses_model->update_noreg($params);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update status nomor register</div>');
+        	redirect('admin/noreg');
+        	$this->session->unset_userdata('success_msg');
+        }
+	}
+
 	public function _cek_reg($str)
 	{
 	   if (preg_match('#[0-9]#', $str) && strpos($str, " ") == false) {
@@ -334,6 +406,18 @@ class Admin extends CI_Controller {
 			return TRUE;
 		}
 		$this->form_validation->set_message('_cek_jabatan', 'Key Security tidak benar');
+	   	return FALSE;
+	}
+
+	public function _cek_noreg($str)
+	{
+		$id 	= $this->input->post('idNoreg');
+		$enkrip = sha1($id.$this->config->item('encryption_key'));
+		if ($str === $enkrip)
+		{
+			return TRUE;
+		}
+		$this->form_validation->set_message('_cek_noreg', 'Key Security tidak benar');
 	   	return FALSE;
 	}
 }

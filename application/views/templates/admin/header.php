@@ -160,6 +160,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <small class="label pull-right bg-green"><div id="jabatan"></div></small>
           </a>
         </li>
+        <li>
+          <a href="<?php echo base_url().'admin/noreg' ?>">
+            <i class="fa fa-thumb-tack"></i> <span>Noreg</span>
+            <small class="label pull-right bg-green"><div id="noreg"></div></small>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

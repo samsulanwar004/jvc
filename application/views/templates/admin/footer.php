@@ -104,6 +104,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       }).done(function( data ) {
        $('#jabatan').html(data);
     });
+
+    $.ajax({
+      type: "GET",
+      url: "<?php echo base_url().'api/noreg/' ?>"
+      }).done(function( data ) {
+       $('#noreg').html(data);
+    });
   });
 
 </script>

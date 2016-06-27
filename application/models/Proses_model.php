@@ -81,6 +81,11 @@ class Proses_model extends CI_Model {
 		return $this->db->insert('jabatan', $params);
 	}
 
+	function simpan_noreg($params = array())
+	{
+		return $this->db->insert('noreg', $params);
+	}
+
 	function get_jadwal_by_tgl($params = array())
 	{
 		$awal = $params['tgl_awal'];
@@ -108,6 +113,25 @@ class Proses_model extends CI_Model {
 		$this->db->from('jabatan');
 		$query = $this->db->get();
 		$result = $query->result();
+
+		return $result;
+	}
+
+	function get_noreg()
+	{
+		$this->db->from('noreg');
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return $result;
+	}
+
+	function get_max_noreg()
+	{
+		$this->db->select('max(noreg) as noreg');
+		$this->db->from('noreg');
+		$query = $this->db->get();
+		$result = $query->row();
 
 		return $result;
 	}
@@ -145,6 +169,16 @@ class Proses_model extends CI_Model {
 		return $result;
 	}
 
+	function get_count_noreg()
+	{
+		$this->db->select('count(*) as count');
+		$this->db->from('noreg');
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
 	function hapus_jadwal($id_jadwal)
 	{
 		$this->db->where('id_jadwal', $id_jadwal);
@@ -167,6 +201,12 @@ class Proses_model extends CI_Model {
 	{
 		$this->db->where('id_jabatan', $params['id_jabatan']);
 		$this->db->update('jabatan', $params);
+	}
+
+	function update_noreg($params = array())
+	{
+		$this->db->where('id_reg', $params['id_reg']);
+		$this->db->update('noreg', $params);
 	}
 
 }
