@@ -87,7 +87,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <?php echo form_open('admin/edit_member'); ?>
                           <div class="form-group">
                             <label for="register" class="control-label">Nomor Register</label>
-                            <input type="text" class="form-control" name="register" placeholder="000" value="<?php echo $member->register; ?>">
+                            <input type="text" class="form-control" id="search-box" autocomplete="off"  name="register" placeholder="000" value="<?php echo $member->register; ?>">
+                            <div id="suggesstion-box"></div>
                           </div>
                           <div class="form-group">
                             <label for="jabatan" class="control-label">Jabatan</label>
@@ -107,7 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                               <option value="2" <?php if ($member->status == 2){echo"selected";} ?>>Admin</option>
                               <option value="3" <?php if ($member->status == 3){echo"selected";} ?>>Banned</option>
                             </select>
-                          </div>                      
+                          </div>                   
                       </div>
                       <div class="modal-footer">
                         <input type="hidden" name="idMember" value="<?php echo $member->id_member; ?>">

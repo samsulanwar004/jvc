@@ -61,7 +61,7 @@ class Admin extends CI_Controller {
 
 	public function edit_member()
 	{
-		$this->form_validation->set_rules('register', 'Nomor Register', 'trim|required|min_length[3]|max_length[3]|callback__cek_reg');
+		$this->form_validation->set_rules('register', 'Nomor Register', 'trim|required|min_length[3]|max_length[3]|is_unique[members.register]|numeric|callback__cek_reg');
 		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_security');
 
 		if ($this->form_validation->run() == FALSE)
@@ -340,6 +340,7 @@ class Admin extends CI_Controller {
 
 	public function edit_noreg()
 	{
+		$this->form_validation->set_rules('noreg', 'No Reg', 'required|callback__cek_noreg_status');
 		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_noreg');
 
 		if ($this->form_validation->run() == FALSE)
@@ -367,10 +368,27 @@ class Admin extends CI_Controller {
 	public function _cek_reg($str)
 	{
 	   if (preg_match('#[0-9]#', $str) && strpos($str, " ") == false) {
-	     return TRUE;
-	   }
-	   $this->form_validation->set_message('_cek_reg', 'Nomor Registrasi tidak sesuai format');
-	   return FALSE;
+	   		$noreg = $this->proses_model->get_noreg_by_noreg($str);
+	   		if ($noreg == TRUE)
+	   		{
+	   			$params = array(
+	   			'noreg' 	=> $str,
+	   			'status' 	=> 1
+	   			);
+		   		$this->proses_model->update_noreg_by_reg($params);
+		     	return TRUE;
+	   		}
+	   		else
+	   		{
+	   			$this->form_validation->set_message('_cek_reg', 'Nomor Registrasi belum terdaftar');
+		   		return FALSE;
+	   		}	
+	   } 
+	   else
+	   {
+		   $this->form_validation->set_message('_cek_reg', 'Nomor Registrasi tidak sesuai format');
+		   return FALSE;
+		}
 	}
 
 	public function _cek_security($str)
@@ -418,6 +436,17 @@ class Admin extends CI_Controller {
 			return TRUE;
 		}
 		$this->form_validation->set_message('_cek_noreg', 'Key Security tidak benar');
+	   	return FALSE;
+	}
+
+	public function _cek_noreg_status($str)
+	{
+		$noreg = $this->proses_model->get_member_by_reg($str);
+		if ($noreg == FALSE)
+		{
+			return TRUE;
+		}
+		$this->form_validation->set_message('_cek_noreg_status', 'Register masih terpakai di member');
 	   	return FALSE;
 	}
 }

@@ -85,4 +85,21 @@ class Api extends CI_Controller {
         $noreg = $this->proses_model->get_count_noreg();
         echo $noreg->count;
     }
+
+    public function auto_noreg()
+    {
+        $noreg = $this->input->post('noreg');
+        if (!empty($noreg))
+        {
+            $auto_noreg = $this->proses_model->get_noreg_by_like($noreg);
+            if (!empty($auto_noreg)) 
+            {
+                echo '<ul id="noreg-list">';
+                foreach ($auto_noreg as $value) {
+                    echo '<li onClick="selectNoreg(\''.$value->noreg.'\');">'.$value->noreg.'</li>';
+                }
+                echo '</ul>';
+            }
+        }
+    }
 }

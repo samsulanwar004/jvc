@@ -126,6 +126,28 @@ class Proses_model extends CI_Model {
 		return $result;
 	}
 
+	function get_noreg_by_like($noreg)
+	{
+		$this->db->from('noreg');
+		$this->db->like('noreg', $noreg, 'after');
+		$this->db->where('status', 0);
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return $result;
+	}
+
+	function get_noreg_by_noreg($noreg)
+	{
+		$this->db->from('noreg');
+		$this->db->where('noreg', $noreg);
+		$this->db->where('status', 0);
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
 	function get_max_noreg()
 	{
 		$this->db->select('max(noreg) as noreg');
@@ -179,6 +201,16 @@ class Proses_model extends CI_Model {
 		return $result;
 	}
 
+	function get_member_by_reg($reg)
+	{
+		$this->db->from('members');
+		$this->db->where('register', $reg);
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
 	function hapus_jadwal($id_jadwal)
 	{
 		$this->db->where('id_jadwal', $id_jadwal);
@@ -206,6 +238,12 @@ class Proses_model extends CI_Model {
 	function update_noreg($params = array())
 	{
 		$this->db->where('id_reg', $params['id_reg']);
+		$this->db->update('noreg', $params);
+	}
+
+	function update_noreg_by_reg($params = array())
+	{
+		$this->db->where('noreg', $params['noreg']);
 		$this->db->update('noreg', $params);
 	}
 

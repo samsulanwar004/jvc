@@ -1,0 +1,24 @@
+#noreg-list {
+  float:left;list-style:none;margin:0;padding:0;width:190px;
+}
+#noreg-list li {
+  padding: 10px; background:#FAFAFA;border-bottom:#F0F0F0 1px solid;
+}
+#noreg-list li:hover {
+  background:#F0F0F0;
+}
+#suggesstion-box {
+  position: absolute;
+    z-index: 1000;
+    cursor: default;
+    padding: 0;
+  margin-top: 2px;
+    list-style: none;
+    border: 1px solid #ccc
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+       -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}

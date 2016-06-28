@@ -92,7 +92,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <?php echo form_open('admin/edit_noreg'); ?>
                       <div class="form-group">
                         <label>Noreg</label>
-                        <input type="text" class="form-control" readonly value="<?php echo $value->noreg; ?>">
+                        <input type="text" class="form-control" name="noreg" readonly value="<?php echo $value->noreg; ?>">
                       </div>  
                       <div class="form-group">
                         <label>Status</label>

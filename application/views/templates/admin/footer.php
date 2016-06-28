@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         eventsjson: "<?php echo base_url().'api/jadwal/'; ?>",
         jsonDateFormat: "human"  // 'YYYY-MM-DD HH:MM:SS'
     });
-    $( window ).load( counter );
+
   });
 
 
@@ -111,7 +111,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       }).done(function( data ) {
        $('#noreg').html(data);
     });
+
+    $("#search-box").keyup(function(){
+      $.ajax({
+      type: "POST",
+      url: "<?php echo base_url().'api/auto_noreg/' ?>",
+      data:'noreg='+$(this).val(),
+      success: function(data){
+        $("#suggesstion-box").show();
+        $("#suggesstion-box").html(data);
+      }
+      });
+    });
+
   });
+
+  function selectNoreg(val) {
+    $("#search-box").val(val);
+    $("#suggesstion-box").hide();
+  }
 
 </script>
 </body>
