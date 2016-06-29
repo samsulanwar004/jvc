@@ -63,3 +63,4 @@ $route['kontak'] = 'home/kontak';
 $route['galery'] = 'home/galery';
 $route['tentang'] = 'home/tentang';
 $route['download'] = 'home/download';
+$route['persetujuan'] = 'home/persetujuan';

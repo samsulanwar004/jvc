@@ -99,4 +99,12 @@ class Home extends CI_Controller {
 		$this->load->view('templates/home/footer');
 	}
 
+	public function persetujuan()
+	{
+		$data['title'] = "Kebijakan";
+		$this->load->view('templates/home/header', $data);
+		$this->load->view('view_kebijakan');
+		$this->load->view('templates/home/footer');
+	}
+
 }
