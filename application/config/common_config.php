@@ -9,7 +9,7 @@ $config['email'] = "admin@jvc.or.id";
 
 $config['facebook']['api_id']       = '641511549358745';
 $config['facebook']['app_secret']   = '9dbd383e1acdd1fc8d437f1308cc632b';
-$config['facebook']['redirect_url'] = 'http://localhost/jvc/login/masuk';
+$config['facebook']['redirect_url'] = 'http://localhost/jvc/api/login_callback_fb';
 $config['facebook']['permissions']  = array(
                                         'email',
                                         'public_profile'

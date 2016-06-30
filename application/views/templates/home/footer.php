@@ -45,6 +45,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $('#counter').html(data);
             });
         });
+
+        function loginFB() {
+            window.location.assign("<?php echo base_url().'api/login_facebook' ?>")
+        }
+
     </script>
 
 </body>
