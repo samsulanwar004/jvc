@@ -160,9 +160,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                     </div>
                       <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
-                      <a href="#" onclick="loginFB()" class="btn btn-block btn-primary btn-facebook"><span class="fa fa-facebook"></span> 
-                        Login dengan Facebook
-                      </a>
                   </form>
                 </div>
                 <div class="modal-footer">
