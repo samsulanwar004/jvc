@@ -5,12 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config['user_email'] = "Jogjakarta V-ixion Community";
 $config['email'] = "admin@jvc.or.id";
 
-// Config FB
-
-$config['facebook']['api_id']       = '641511549358745';
-$config['facebook']['app_secret']   = '9dbd383e1acdd1fc8d437f1308cc632b';
-$config['facebook']['redirect_url'] = 'http://localhost/jvc/api/login_callback_fb';
-$config['facebook']['permissions']  = array(
-                                        'email',
-                                        'public_profile'
-                                      );
+// Config Google
+$config['site_key_google'] = "6Lfc_yMTAAAAAM5ySncrNrI2s8h5bW4Ct1Q8RMQc";
+$config['secret_key_google'] = "6Lfc_yMTAAAAAIh84mYbLme8BVLZQIyvlwez6s8B";

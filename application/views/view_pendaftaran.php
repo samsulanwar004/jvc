@@ -117,7 +117,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-xs-5">
                             <input type="password" name="passwordUlang" class="form-control" id="password-ulang" placeholder="Ulangi Password">
                         </div>
-                    </div>                   
+                    </div>   
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="lblCaptcha">Captcha:</label>
+                        <div class="col-xs-4">
+                            <div class="g-recaptcha" data-sitekey="6Lfc_yMTAAAAAM5ySncrNrI2s8h5bW4Ct1Q8RMQc"></div>
+                        </div>
+                    </div>                
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <label class="checkbox-inline">

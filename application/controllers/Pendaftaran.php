@@ -34,19 +34,20 @@ class Pendaftaran extends CI_Controller {
 
 	public function daftar()
 	{
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|max_length[50]|is_unique[members.email]');
-		$this->form_validation->set_rules('namaDepan', 'Nama Depan', 'trim|required');
-		$this->form_validation->set_rules('jnsKelamin', 'Jenis Kelamin', 'required');
-		$this->form_validation->set_rules('tmpLahir', 'Tempat Lahir', 'required');
-		$this->form_validation->set_rules('tglLahir', 'Tanggal Lahir', 'required');
-		$this->form_validation->set_rules('blnLahir', 'Bulan Lahir', 'required');
-		$this->form_validation->set_rules('thnLahir', 'Tahun Lahir', 'required');
-		$this->form_validation->set_rules('noTelpon', 'Nomor Telepon', 'trim|required|min_length[11]|max_length[12]|is_unique[members.noTelpon]');
-		$this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[3]|max_length[50]');
-		$this->form_validation->set_rules('nopol', 'Nomor Polisi', 'trim|required|min_length[6]|max_length[9]|is_unique[members.nopol]|callback__cek_nopol');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[12]');
-        $this->form_validation->set_rules('passwordUlang', 'Ulangi Password', 'trim|required|matches[password]');
-        $this->form_validation->set_rules('persetujuan', 'Kebijakan dan Ketentuan', 'required');
+		// $this->form_validation->set_rules('email', 'Email', 'trim|required|max_length[50]|is_unique[members.email]');
+		// $this->form_validation->set_rules('namaDepan', 'Nama Depan', 'trim|required');
+		// $this->form_validation->set_rules('jnsKelamin', 'Jenis Kelamin', 'required');
+		// $this->form_validation->set_rules('tmpLahir', 'Tempat Lahir', 'required');
+		// $this->form_validation->set_rules('tglLahir', 'Tanggal Lahir', 'required');
+		// $this->form_validation->set_rules('blnLahir', 'Bulan Lahir', 'required');
+		// $this->form_validation->set_rules('thnLahir', 'Tahun Lahir', 'required');
+		// $this->form_validation->set_rules('noTelpon', 'Nomor Telepon', 'trim|required|min_length[11]|max_length[12]|is_unique[members.noTelpon]');
+		// $this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[3]|max_length[50]');
+		// $this->form_validation->set_rules('nopol', 'Nomor Polisi', 'trim|required|min_length[6]|max_length[9]|is_unique[members.nopol]|callback__cek_nopol');
+  //       $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[12]');
+  //       $this->form_validation->set_rules('passwordUlang', 'Ulangi Password', 'trim|required|matches[password]');
+  //       $this->form_validation->set_rules('persetujuan', 'Kebijakan dan Ketentuan', 'required');
+        $this->form_validation->set_rules('g-recaptcha-response', 'Captcha', 'trim|required');
 
         if ($this->form_validation->run() == FALSE)
         {
@@ -89,8 +90,8 @@ class Pendaftaran extends CI_Controller {
 	        );	        
 	        //var_dump($params);die();
 
-	        $this->members_model->simpan_member($params);
-	        $this->notification_model->kirim_email_pendaftaran($params, $password);
+	        //$this->members_model->simpan_member($params);
+	        //$this->notification_model->kirim_email_pendaftaran($params, $password);
 
             $data = array(
             	'title' 	=> "Berhasil Mendaftar",
