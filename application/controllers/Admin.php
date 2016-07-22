@@ -61,7 +61,7 @@ class Admin extends CI_Controller {
 
 	public function edit_member()
 	{
-		$this->form_validation->set_rules('register', 'Nomor Register', 'trim|required|min_length[3]|max_length[3]|is_unique[members.register]|numeric|callback__cek_reg');
+		$this->form_validation->set_rules('register', 'Nomor Register', 'trim|required|min_length[3]|max_length[3]|numeric|callback__cek_reg');
 		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_security');
 
 		if ($this->form_validation->run() == FALSE)
@@ -355,7 +355,8 @@ class Admin extends CI_Controller {
 
         	$params = array(
         		'id_reg' 	=> $id_reg,
-        		'status' 	=> $status
+        		'status' 	=> $status,
+        		'id_member' => NULL
         	);
 
         	$this->proses_model->update_noreg($params);
@@ -367,22 +368,33 @@ class Admin extends CI_Controller {
 
 	public function _cek_reg($str)
 	{
+
 	   if (preg_match('#[0-9]#', $str) && strpos($str, " ") == false) {
-	   		$noreg = $this->proses_model->get_noreg_by_noreg($str);
-	   		if ($noreg == TRUE)
-	   		{
-	   			$params = array(
-	   			'noreg' 	=> $str,
-	   			'status' 	=> 1
-	   			);
-		   		$this->proses_model->update_noreg_by_reg($params);
-		     	return TRUE;
-	   		}
-	   		else
-	   		{
-	   			$this->form_validation->set_message('_cek_reg', 'Nomor Registrasi belum terdaftar');
-		   		return FALSE;
-	   		}	
+	   		$id_member = $this->input->post('idMember');
+			$cek_noreg = $this->proses_model->get_noreg_by_idmember($str, $id_member);
+			if ($cek_noreg == TRUE)
+			{
+				return TRUE;
+			}
+			else
+			{
+		   		$noreg = $this->proses_model->get_noreg_by_noreg($str);
+		   		if ($noreg == TRUE)
+		   		{
+		   			$params = array(
+		   			'noreg' 	=> $str,
+		   			'status' 	=> 1,
+		   			'id_member' => $id_member
+		   			);
+			   		$this->proses_model->update_noreg_by_reg($params);
+			     	return TRUE;
+		   		}
+		   		else
+		   		{
+		   			$this->form_validation->set_message('_cek_reg', 'Nomor Registrasi belum terdaftar atau sudah terpakai');
+			   		return FALSE;
+		   		}	
+		   	}
 	   } 
 	   else
 	   {

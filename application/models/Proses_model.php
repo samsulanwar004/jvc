@@ -148,6 +148,18 @@ class Proses_model extends CI_Model {
 		return $result;
 	}
 
+	function get_noreg_by_idmember($noreg, $id_member)
+	{
+		$this->db->from('noreg');
+		$this->db->where('noreg', $noreg);
+		$this->db->where('id_member', $id_member);
+		$this->db->where('status', 1);
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
 	function get_max_noreg()
 	{
 		$this->db->select('max(noreg) as noreg');
