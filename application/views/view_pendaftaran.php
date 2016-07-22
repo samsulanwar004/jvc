@@ -24,6 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">
             <div class="col-lg-12">
                 <?php echo form_open('pendaftaran/daftar', array('class' => 'form-horizontal')); ?>
+                <?php echo $script;?>
                     <div class="form-group">
                         <label class="control-label col-xs-3" for="lblEmail">Email:</label>
                         <div class="col-xs-5">
@@ -121,7 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group">
                         <label class="control-label col-xs-3" for="lblCaptcha">Captcha:</label>
                         <div class="col-xs-4">
-                            <div class="g-recaptcha" data-sitekey="6Lfc_yMTAAAAAM5ySncrNrI2s8h5bW4Ct1Q8RMQc"></div>
+                            <?php echo $widget;?>
                         </div>
                     </div>                
                     <div class="form-group">
