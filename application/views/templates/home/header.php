@@ -152,7 +152,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <?php echo form_open('login/member', array('role' => 'form')); ?>
                     <div class="form-group">
                       <label for="username"><span class="glyphicon glyphicon-user"></span> Username</label>
-                      <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                      <input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off">
                     </div>
                     <div class="form-group">
                       <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
