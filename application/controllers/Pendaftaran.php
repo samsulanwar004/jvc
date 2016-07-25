@@ -29,7 +29,7 @@ class Pendaftaran extends CI_Controller {
 			$data = array(
 				'title'	=> "Pendaftaran",
 	            'widget'=> $this->recaptcha->getWidget(),
-	            'script'=> $this->recaptcha->getScriptTag(),
+	            'script'=> $this->recaptcha->getScriptTag()
 	        );
 			$this->load->view('templates/home/header', $data);
 			$this->load->view('view_pendaftaran');

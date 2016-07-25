@@ -12,358 +12,511 @@ class Admin extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('admin/view_login');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			redirect('admin/dashboard');
+		}
+		else
+		{
+			$data['title'] = "Admin JVC"; 
+			$this->load->view('admin/view_login', $data);
+		}
 	}
 
 	public function dashboard()
 	{
-		$data['title'] = "Dashboard";
-		$this->load->view('templates/admin/header', $data);
-		$this->load->view('admin/view_dashboard');
-		$this->load->view('templates/admin/footer');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$data['title'] = "Dashboard";
+			$this->load->view('templates/admin/header', $data);
+			$this->load->view('admin/view_dashboard');
+			$this->load->view('templates/admin/footer');
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function kalender()
 	{
-		$jadwal = $this->proses_model->get_jadwal();
-		$data = array(
-			'title' => "Kalender",
-			'jadwal' => $jadwal,
-			'key'		=> $this->config->item('encryption_key')
-		);
-		$this->load->view('templates/admin/header', $data);
-		$this->load->view('admin/view_kalender');
-		$this->load->view('templates/admin/footer');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$jadwal = $this->proses_model->get_jadwal();
+			$data = array(
+				'title' => "Kalender",
+				'jadwal'=> $jadwal,
+				'key'	=> $this->config->item('encryption_key')
+			);
+			$this->load->view('templates/admin/header', $data);
+			$this->load->view('admin/view_kalender');
+			$this->load->view('templates/admin/footer');
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function email()
 	{
-		$data['title'] = "Email";
-		$this->load->view('templates/admin/header', $data);
-		$this->load->view('admin/view_email');
-		$this->load->view('templates/admin/footer');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$data['title'] = "Email";
+			$this->load->view('templates/admin/header', $data);
+			$this->load->view('admin/view_email');
+			$this->load->view('templates/admin/footer');
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function members()
 	{
-		$members = $this->members_model->get_all_member();
-		$jabatan = $this->proses_model->get_jabatan();
-		$data = array(
-			'title'		=> "Members",
-			'members' 	=> $members,
-			'jabatan'	=> $jabatan,
-			'key'		=> $this->config->item('encryption_key')
-		);
-		$this->load->view('templates/admin/header', $data);
-		$this->load->view('admin/view_members');
-		$this->load->view('templates/admin/footer');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$members = $this->members_model->get_all_member();
+			$jabatan = $this->proses_model->get_jabatan();
+			$data = array(
+				'title'		=> "Members",
+				'members' 	=> $members,
+				'jabatan'	=> $jabatan,
+				'key'		=> $this->config->item('encryption_key')
+			);
+			$this->load->view('templates/admin/header', $data);
+			$this->load->view('admin/view_members');
+			$this->load->view('templates/admin/footer');
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function edit_member()
 	{
-		$this->form_validation->set_rules('register', 'Nomor Register', 'trim|required|min_length[3]|max_length[3]|numeric|callback__cek_reg');
-		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_security');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$this->form_validation->set_rules('register', 'Nomor Register', 'trim|required|min_length[3]|max_length[3]|numeric|callback__cek_reg');
+			$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_security');
 
-		if ($this->form_validation->run() == FALSE)
-        {
-        	$this->session->unset_userdata('success_msg');
-        	$this->members();
-        }
-        else
-        {
-        	$id_member 	= $this->input->post('idMember');
-        	$register 	= $this->input->post('register');
-        	$jabatan 	= $this->input->post('jabatan');
-        	$status 	= $this->input->post('status');
+			if ($this->form_validation->run() == FALSE)
+	        {
+	        	$this->session->unset_userdata('success_msg');
+	        	$this->members();
+	        }
+	        else
+	        {
+	        	$id_member 	= $this->input->post('idMember');
+	        	$register 	= $this->input->post('register');
+	        	$jabatan 	= $this->input->post('jabatan');
+	        	$status 	= $this->input->post('status');
 
-        	$params = array(
-        		'id_member' 	=> $id_member,
-        		'register' 		=> $register,
-        		'jabatan' 		=> $jabatan,
-        		'status' 		=> $status,
-        		'modified_in' 	=> date('Y-m-d H:i:s')
-        	);
+	        	$params = array(
+	        		'id_member' 	=> $id_member,
+	        		'register' 		=> $register,
+	        		'jabatan' 		=> $jabatan,
+	        		'status' 		=> $status,
+	        		'modified_in' 	=> date('Y-m-d H:i:s')
+	        	);
 
-        	$this->members_model->update_member($params);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update member</div>');
-        	redirect('admin/members');
-        	$this->session->unset_userdata('success_msg');
-        }
+	        	$this->members_model->update_member($params);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update member</div>');
+	        	redirect('admin/members');
+	        	$this->session->unset_userdata('success_msg');
+	        }
+	    }
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function hapus_member()
 	{
-		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_security');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_security');
 
-		if ($this->form_validation->run() == FALSE)
-        {
-        	$this->session->unset_userdata('success_msg');
-        	$this->members();
-        }
-        else
-        {
-        	$id_member 	= $this->input->post('idMember');
-        	$member 	= $this->members_model->get_member($id_member);
-        	if ($member->foto == TRUE)
-        	{
-        		unlink("upload_foto/".$member->foto);
-        	}
-        	$this->members_model->hapus_member($id_member);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus member</div>');
-        	redirect('admin/members');
-        	$this->session->unset_userdata('success_msg');
-        }
+			if ($this->form_validation->run() == FALSE)
+	        {
+	        	$this->session->unset_userdata('success_msg');
+	        	$this->members();
+	        }
+	        else
+	        {
+	        	$id_member 	= $this->input->post('idMember');
+	        	$member 	= $this->members_model->get_member($id_member);
+	        	if ($member->foto == TRUE)
+	        	{
+	        		unlink("upload_foto/".$member->foto);
+	        	}
+	        	$this->members_model->hapus_member($id_member);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus member</div>');
+	        	redirect('admin/members');
+	        	$this->session->unset_userdata('success_msg');
+	        }
+	    }
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function simpan_jadwal()
 	{
-		$this->form_validation->set_rules('judul', 'Judul Kegiatan', 'trim|required|max_length[20]');
-		$this->form_validation->set_rules('tglJadwal', 'Tanggal', 'required');
-		$this->form_validation->set_rules('jamJadwal', 'Jam', 'required');
-		$this->form_validation->set_rules('deskripsi', 'Deskripsi Kegiatan', 'trim|required|max_length[100]');
-		if ($this->form_validation->run() == FALSE)
-        {
-        	$this->kalender();
-        }
-        else
-        {
-        	$judul 		= $this->input->post('judul');
-        	$tgl 		= $this->input->post('tglJadwal');
-        	$jam 		= $this->input->post('jamJadwal');
-        	$deskripsi 	= $this->input->post('deskripsi');
-        	$tglArray	= explode('-', $tgl);
-        	$id_jadwal1	= $tglArray[0].$tglArray[1].$tglArray[2];
-        	$id_jadwal2 = $this->proses_model->get_idjadwal();
-        	$id_jadwal 	= sprintf("%06d%04d",intval($id_jadwal1),intval($id_jadwal2['id']));
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$this->form_validation->set_rules('judul', 'Judul Kegiatan', 'trim|required|max_length[20]');
+			$this->form_validation->set_rules('tglJadwal', 'Tanggal', 'required');
+			$this->form_validation->set_rules('jamJadwal', 'Jam', 'required');
+			$this->form_validation->set_rules('deskripsi', 'Deskripsi Kegiatan', 'trim|required|max_length[100]');
+			if ($this->form_validation->run() == FALSE)
+	        {
+	        	$this->kalender();
+	        }
+	        else
+	        {
+	        	$judul 		= $this->input->post('judul');
+	        	$tgl 		= $this->input->post('tglJadwal');
+	        	$jam 		= $this->input->post('jamJadwal');
+	        	$deskripsi 	= $this->input->post('deskripsi');
+	        	$tglArray	= explode('-', $tgl);
+	        	$id_jadwal1	= $tglArray[0].$tglArray[1].$tglArray[2];
+	        	$id_jadwal2 = $this->proses_model->get_idjadwal();
+	        	$id_jadwal 	= sprintf("%06d%04d",intval($id_jadwal1),intval($id_jadwal2['id']));
 
-        	$params = array(
-        		'judul' 	=> ucfirst($judul),
-        		'tanggal' 	=> $tgl.' '.$jam,
-        		'deskripsi'	=> ucfirst($deskripsi),
-        		'id_jadwal' => $id_jadwal,
-        		'created_at'=> date('Y-m-d H:i:s')
-        	);
+	        	$params = array(
+	        		'judul' 	=> ucfirst($judul),
+	        		'tanggal' 	=> $tgl.' '.$jam,
+	        		'deskripsi'	=> ucfirst($deskripsi),
+	        		'id_jadwal' => $id_jadwal,
+	        		'created_at'=> date('Y-m-d H:i:s')
+	        	);
 
-        	$this->proses_model->simpan_jadwal($params);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil simpan jadwal kegiatan</div>');
-        	redirect('admin/kalender');
-        	$this->session->unset_userdata('success_msg');
-        }
+	        	$this->proses_model->simpan_jadwal($params);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil simpan jadwal kegiatan</div>');
+	        	redirect('admin/kalender');
+	        	$this->session->unset_userdata('success_msg');
+	        }
+	    }
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function edit_jadwal()
 	{
-		$this->form_validation->set_rules('judul', 'Judul Kegiatan', 'trim|required|max_length[20]');
-		$this->form_validation->set_rules('deskripsi', 'Deskripsi Kegiatan', 'trim|required|max_length[100]');
-		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jadwal');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$this->form_validation->set_rules('judul', 'Judul Kegiatan', 'trim|required|max_length[20]');
+			$this->form_validation->set_rules('deskripsi', 'Deskripsi Kegiatan', 'trim|required|max_length[100]');
+			$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jadwal');
 
-		if ($this->form_validation->run() == FALSE)
-        {
-        	$this->session->unset_userdata('success_msg');
-        	$this->kalender();
-        }
-        else
-        {
-        	$id_jadwal 	= $this->input->post('idJadwal');
-        	$judul 		= $this->input->post('judul');
-        	$deskripsi 	= $this->input->post('deskripsi');
+			if ($this->form_validation->run() == FALSE)
+	        {
+	        	$this->session->unset_userdata('success_msg');
+	        	$this->kalender();
+	        }
+	        else
+	        {
+	        	$id_jadwal 	= $this->input->post('idJadwal');
+	        	$judul 		= $this->input->post('judul');
+	        	$deskripsi 	= $this->input->post('deskripsi');
 
-        	$params = array(
-        		'id_jadwal' 	=> $id_jadwal,
-        		'judul' 		=> ucfirst($judul),
-        		'deskripsi' 	=> ucfirst($deskripsi),
-        		'modified_in' 	=> date('Y-m-d H:i:s')
-        	);
+	        	$params = array(
+	        		'id_jadwal' 	=> $id_jadwal,
+	        		'judul' 		=> ucfirst($judul),
+	        		'deskripsi' 	=> ucfirst($deskripsi),
+	        		'modified_in' 	=> date('Y-m-d H:i:s')
+	        	);
 
-        	$this->proses_model->update_jadwal($params);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update kegiatan</div>');
-        	redirect('admin/kalender');
-        	$this->session->unset_userdata('success_msg');
-        }
+	        	$this->proses_model->update_jadwal($params);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update kegiatan</div>');
+	        	redirect('admin/kalender');
+	        	$this->session->unset_userdata('success_msg');
+	        }
+	    }
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function hapus_jadwal()
 	{
-		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jadwal');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jadwal');
 
-		if ($this->form_validation->run() == FALSE)
-        {
-        	$this->session->unset_userdata('success_msg');
-        	$this->kalender();
-        }
-        else
-        {
-        	$id_jadwal 	= $this->input->post('idJadwal');
-        	$this->proses_model->hapus_jadwal($id_jadwal);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus kegiatan</div>');
-        	redirect('admin/kalender');
-        	$this->session->unset_userdata('success_msg');
-        }
+			if ($this->form_validation->run() == FALSE)
+	        {
+	        	$this->session->unset_userdata('success_msg');
+	        	$this->kalender();
+	        }
+	        else
+	        {
+	        	$id_jadwal 	= $this->input->post('idJadwal');
+	        	$this->proses_model->hapus_jadwal($id_jadwal);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus kegiatan</div>');
+	        	redirect('admin/kalender');
+	        	$this->session->unset_userdata('success_msg');
+	        }
+	    }
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function jabatan()
 	{
-		$jabatan = $this->proses_model->get_jabatan();
-		$data = array(
-			'title' 	=> "Jabatan",
-			'jabatan' 	=> $jabatan,
-			'key'		=> $this->config->item('encryption_key')
-		);
-		$this->load->view('templates/admin/header', $data);
-		$this->load->view('admin/view_jabatan');
-		$this->load->view('templates/admin/footer');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$jabatan = $this->proses_model->get_jabatan();
+			$data = array(
+				'title' 	=> "Jabatan",
+				'jabatan' 	=> $jabatan,
+				'key'		=> $this->config->item('encryption_key')
+			);
+			$this->load->view('templates/admin/header', $data);
+			$this->load->view('admin/view_jabatan');
+			$this->load->view('templates/admin/footer');
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function simpan_jabatan()
 	{
-		$this->form_validation->set_rules('jabatan', 'Jabatan', 'trim|required|max_length[50]');
-		$this->form_validation->set_rules('deskripsi', 'Deskripsi Jabatan', 'trim|required|max_length[100]');
-		if ($this->form_validation->run() == FALSE)
-        {
-        	$this->jabatan();
-        }
-        else
-        {
-        	$jabatan	= $this->input->post('jabatan');
-        	$deskripsi 	= $this->input->post('deskripsi');
-        	$id_jbtn1	= date('Ymd');
-        	$id_jbtn2 	= $this->proses_model->get_idjabatan();
-        	$id_jbtn 	= sprintf("%06d%04d",intval($id_jbtn1),intval($id_jbtn2['id']));
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$this->form_validation->set_rules('jabatan', 'Jabatan', 'trim|required|max_length[50]');
+			$this->form_validation->set_rules('deskripsi', 'Deskripsi Jabatan', 'trim|required|max_length[100]');
+			if ($this->form_validation->run() == FALSE)
+	        {
+	        	$this->jabatan();
+	        }
+	        else
+	        {
+	        	$jabatan	= $this->input->post('jabatan');
+	        	$deskripsi 	= $this->input->post('deskripsi');
+	        	$id_jbtn1	= date('Ymd');
+	        	$id_jbtn2 	= $this->proses_model->get_idjabatan();
+	        	$id_jbtn 	= sprintf("%06d%04d",intval($id_jbtn1),intval($id_jbtn2['id']));
 
-        	$params = array(
-        		'jabatan' 		=> ucfirst($jabatan),
-        		'deskripsi'		=> ucfirst($deskripsi),
-        		'id_jabatan' 	=> $id_jbtn,
-        		'created_at'	=> date('Y-m-d H:i:s')
-        	);
+	        	$params = array(
+	        		'jabatan' 		=> ucfirst($jabatan),
+	        		'deskripsi'		=> ucfirst($deskripsi),
+	        		'id_jabatan' 	=> $id_jbtn,
+	        		'created_at'	=> date('Y-m-d H:i:s')
+	        	);
 
-        	$this->proses_model->simpan_jabatan($params);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil simpan jabatan</div>');
-        	redirect('admin/jabatan');
-        	$this->session->unset_userdata('success_msg');
-        }
+	        	$this->proses_model->simpan_jabatan($params);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil simpan jabatan</div>');
+	        	redirect('admin/jabatan');
+	        	$this->session->unset_userdata('success_msg');
+	        }
+	    }
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function edit_jabatan()
 	{
-		$this->form_validation->set_rules('jabatan', 'Jabatan', 'trim|required|max_length[50]');
-		$this->form_validation->set_rules('deskripsi', 'Deskripsi Jabatan', 'trim|required|max_length[100]');
-		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jabatan');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$this->form_validation->set_rules('jabatan', 'Jabatan', 'trim|required|max_length[50]');
+			$this->form_validation->set_rules('deskripsi', 'Deskripsi Jabatan', 'trim|required|max_length[100]');
+			$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jabatan');
 
-		if ($this->form_validation->run() == FALSE)
-        {
-        	$this->session->unset_userdata('success_msg');
-        	$this->jabatan();
-        }
-        else
-        {
-        	$id_jabatan 	= $this->input->post('idJabatan');
-        	$jabatan		= $this->input->post('jabatan');
-        	$deskripsi 		= $this->input->post('deskripsi');
+			if ($this->form_validation->run() == FALSE)
+	        {
+	        	$this->session->unset_userdata('success_msg');
+	        	$this->jabatan();
+	        }
+	        else
+	        {
+	        	$id_jabatan 	= $this->input->post('idJabatan');
+	        	$jabatan		= $this->input->post('jabatan');
+	        	$deskripsi 		= $this->input->post('deskripsi');
 
-        	$params = array(
-        		'id_jabatan' 	=> $id_jabatan,
-        		'jabatan' 		=> ucfirst($jabatan),
-        		'deskripsi' 	=> ucfirst($deskripsi),
-        		'modified_in' 	=> date('Y-m-d H:i:s')
-        	);
+	        	$params = array(
+	        		'id_jabatan' 	=> $id_jabatan,
+	        		'jabatan' 		=> ucfirst($jabatan),
+	        		'deskripsi' 	=> ucfirst($deskripsi),
+	        		'modified_in' 	=> date('Y-m-d H:i:s')
+	        	);
 
-        	$this->proses_model->update_jabatan($params);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update jabatan</div>');
-        	redirect('admin/jabatan');
-        	$this->session->unset_userdata('success_msg');
-        }
+	        	$this->proses_model->update_jabatan($params);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update jabatan</div>');
+	        	redirect('admin/jabatan');
+	        	$this->session->unset_userdata('success_msg');
+	        }
+	    }
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function hapus_jabatan()
 	{
-		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jabatan');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_jabatan');
 
-		if ($this->form_validation->run() == FALSE)
-        {
-        	$this->session->unset_userdata('success_msg');
-        	$this->jabatan();
-        }
-        else
-        {
-        	$id_jabatan = $this->input->post('idJabatan');
-        	$this->proses_model->hapus_jabatan($id_jabatan);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus jabatan</div>');
-        	redirect('admin/jabatan');
-        	$this->session->unset_userdata('success_msg');
-        }
+			if ($this->form_validation->run() == FALSE)
+	        {
+	        	$this->session->unset_userdata('success_msg');
+	        	$this->jabatan();
+	        }
+	        else
+	        {
+	        	$id_jabatan = $this->input->post('idJabatan');
+	        	$this->proses_model->hapus_jabatan($id_jabatan);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus jabatan</div>');
+	        	redirect('admin/jabatan');
+	        	$this->session->unset_userdata('success_msg');
+	        }
+	    }
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function noreg()
 	{
-		$noreg = $this->proses_model->get_noreg();
-		$data = array(
-			'title' 	=> "Noreg",
-			'noreg' 	=> $noreg,
-			'key'		=> $this->config->item('encryption_key')
-		);
-		$this->load->view('templates/admin/header', $data);
-		$this->load->view('admin/view_noreg');
-		$this->load->view('templates/admin/footer');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$noreg = $this->proses_model->get_noreg();
+			$data = array(
+				'title' 	=> "Noreg",
+				'noreg' 	=> $noreg,
+				'key'		=> $this->config->item('encryption_key')
+			);
+			$this->load->view('templates/admin/header', $data);
+			$this->load->view('admin/view_noreg');
+			$this->load->view('templates/admin/footer');
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function simpan_noreg()
 	{
-		$this->form_validation->set_rules('jumlah', 'Jumlah Register', 'trim|required|max_length[3]|numeric');
-		if ($this->form_validation->run() == FALSE)
-        {
-        	$this->noreg();
-        }
-        else
-        {
-        	$jumlah		= $this->input->post('jumlah');
-        	$noAkhir	= $this->proses_model->get_max_noreg();
-        	$urut 		= substr($noAkhir->noreg, 1);
-        	$reg 		= (int) $urut;
-        	$i 			= $reg+1;
-        	$jum 		= $jumlah+$reg;
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$this->form_validation->set_rules('jumlah', 'Jumlah Register', 'trim|required|max_length[3]|numeric');
+			if ($this->form_validation->run() == FALSE)
+	        {
+	        	$this->noreg();
+	        }
+	        else
+	        {
+	        	$jumlah		= $this->input->post('jumlah');
+	        	$noAkhir	= $this->proses_model->get_max_noreg();
+	        	$urut 		= substr($noAkhir->noreg, 1);
+	        	$reg 		= (int) $urut;
+	        	$i 			= $reg+1;
+	        	$jum 		= $jumlah+$reg;
 
-        	for ($i=$i; $i <= $jum; $i++) { 
-	        	$i		= str_pad($i, 3, "0", STR_PAD_LEFT);
-        		$params = array(
-	        		'noreg' 		=> $i,
-	        		'status'		=> 0
-        		);
-        		$this->proses_model->simpan_noreg($params);
-        	}
-        	
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil buat nomor register</div>');
-        	redirect('admin/noreg');
-        	$this->session->unset_userdata('success_msg');
-        }
+	        	for ($i=$i; $i <= $jum; $i++) { 
+		        	$i		= str_pad($i, 3, "0", STR_PAD_LEFT);
+	        		$params = array(
+		        		'noreg' 		=> $i,
+		        		'status'		=> 0
+	        		);
+	        		$this->proses_model->simpan_noreg($params);
+	        	}
+	        	
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil buat nomor register</div>');
+	        	redirect('admin/noreg');
+	        	$this->session->unset_userdata('success_msg');
+	        }
+	    }
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function edit_noreg()
 	{
-		$this->form_validation->set_rules('noreg', 'No Reg', 'required|callback__cek_noreg_status');
-		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_noreg');
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$this->form_validation->set_rules('noreg', 'No Reg', 'required|callback__cek_noreg_status');
+			$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_noreg');
 
-		if ($this->form_validation->run() == FALSE)
-        {
-        	$this->session->unset_userdata('success_msg');
-        	$this->noreg();
-        }
-        else
-        {
-        	$id_reg 	= $this->input->post('idNoreg');
-        	$status		= $this->input->post('status');
+			if ($this->form_validation->run() == FALSE)
+	        {
+	        	$this->session->unset_userdata('success_msg');
+	        	$this->noreg();
+	        }
+	        else
+	        {
+	        	$id_reg 	= $this->input->post('idNoreg');
+	        	$status		= $this->input->post('status');
 
-        	$params = array(
-        		'id_reg' 	=> $id_reg,
-        		'status' 	=> $status,
-        		'id_member' => NULL
-        	);
+	        	$params = array(
+	        		'id_reg' 	=> $id_reg,
+	        		'status' 	=> $status,
+	        		'id_member' => NULL
+	        	);
 
-        	$this->proses_model->update_noreg($params);
-        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update status nomor register</div>');
-        	redirect('admin/noreg');
-        	$this->session->unset_userdata('success_msg');
-        }
+	        	$this->proses_model->update_noreg($params);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil update status nomor register</div>');
+	        	redirect('admin/noreg');
+	        	$this->session->unset_userdata('success_msg');
+	        }
+	    }
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
 	}
 
 	public function _cek_reg($str)

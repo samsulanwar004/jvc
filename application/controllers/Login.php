@@ -48,6 +48,31 @@ class Login extends CI_Controller {
 		}
 	}
 
+	public function admin()
+	{
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			redirect('admin/dashboard');
+		}
+		else
+		{
+			$this->form_validation->set_rules('email', 'Email', 'trim|required');
+			$this->form_validation->set_rules('password', 'Password', 'trim|required|callback__cek_login_admin');
+
+			if ($this->form_validation->run() == FALSE)
+			{	
+				$data['title'] = "Admin JVC";
+				$this->load->view('admin/view_login', $data);
+			}
+			else
+			{
+				redirect('admin/dashboard');
+			}
+		}
+
+	}
+
 	public function _cek_login($password)
 	{
 		$email = $this->input->post('email');
@@ -71,6 +96,29 @@ class Login extends CI_Controller {
 		}
 	}
 
+	public function _cek_login_admin($password)
+	{
+		$email = $this->input->post('email');
+		$result = $this->login_model->login_admin($email, $password);
+
+		if ($result)
+		{
+			foreach ($result as $row) {
+				$session = array(
+					'id_member' => $row->id_member,
+					'nama' => $row->nama
+				);
+				$this->session->set_userdata('logged_in_admin', $session);
+			}
+			return TRUE;
+		}
+		else
+		{
+			$this->form_validation->set_message('_cek_login_admin', 'Email/Password salah');
+			return FALSE;
+		}
+	}
+
 	public function logout()
 	{
 		$this->session->unset_userdata('logged_in');
@@ -81,6 +129,13 @@ class Login extends CI_Controller {
 		$this->load->view('templates/home/header', $data);
 		$this->load->view('view_notif');
 		$this->load->view('templates/home/footer');
+	}
+
+	public function logout_admin()
+	{
+		$this->session->unset_userdata('logged_in_admin');
+		$this->session->sess_destroy();
+		redirect('admin');
 	}
 
 }

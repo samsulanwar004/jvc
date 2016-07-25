@@ -10,6 +10,7 @@ class Login_model extends CI_Model {
 		$this->db->where('email', $email);
 		$this->db->where('password', md5($password));
 		$this->db->where('status', 1);
+		$this->db->or_where('status', 2);
 		$this->db->limit(1);
 
 		$query = $this->db->get();
@@ -23,12 +24,13 @@ class Login_model extends CI_Model {
 		}
 	}
 
-	function login_facebook($email)
+	function login_admin($email, $password)
 	{
 		$this->db->select('*');
 		$this->db->from('members');
 		$this->db->where('email', $email);
-		$this->db->where('status', 1);
+		$this->db->where('password', md5($password));
+		$this->db->where('status', 2);
 		$this->db->limit(1);
 
 		$query = $this->db->get();
@@ -41,4 +43,5 @@ class Login_model extends CI_Model {
 			return false;
 		}
 	}
+
 }

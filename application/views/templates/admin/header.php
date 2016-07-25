@@ -85,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <a href="#" class="btn btn-default btn-flat">Profil</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Logout</a>
+                  <a href="<?php echo base_url().'login/logout_admin' ?>" class="btn btn-default btn-flat">Logout</a>
                 </div>
               </li>
             </ul>
