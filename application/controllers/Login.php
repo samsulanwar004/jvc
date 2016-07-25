@@ -83,7 +83,7 @@ class Login extends CI_Controller {
 			foreach ($result as $row) {
 				$session = array(
 					'id_member' => $row->id_member,
-					'nama' => $row->nama
+					'nama' 		=> $row->nama
 				);
 				$this->session->set_userdata('logged_in', $session);
 			}
@@ -106,7 +106,10 @@ class Login extends CI_Controller {
 			foreach ($result as $row) {
 				$session = array(
 					'id_member' => $row->id_member,
-					'nama' => $row->nama
+					'nama' 		=> $row->nama,
+					'foto' 		=> $row->foto,
+					'jabatan'	=> $row->jabatan,
+					'register' 	=> $row->register
 				);
 				$this->session->set_userdata('logged_in_admin', $session);
 			}

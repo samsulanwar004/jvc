@@ -41,7 +41,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
+<?php 
+  $session  = $this->session->userdata('logged_in_admin'); 
+  $nama     = $session['nama'];
+  $foto     = $session['foto'];
+  $register = $session['register'];
+  $jabatan  = $session['jabatan'];
+?>
   <header class="main-header">
     <!-- Logo -->
     <a href="<?php echo base_url().'admin/dashboard' ?>" class="logo">
@@ -62,17 +68,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<?php echo base_url().'upload_foto/1606060004.jpg'?>" class="user-image" alt="User Image">
-              <span class="hidden-xs">Sam Rock</span>
+              <img src="<?php echo base_url().'upload_foto/'.$foto; ?>" class="user-image" alt="User Image">
+              <span class="hidden-xs"><?php echo $nama; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="<?php echo base_url().'upload_foto/1606060004.jpg'?>" class="img-circle" alt="User Image">
+                <img src="<?php echo base_url().'upload_foto/'.$foto; ?>" class="img-circle" alt="User Image">
 
                 <p>
-                  Sam Rock - Web Developer
-                  <small>Member since Jan. 2013</small>
+                  <?php echo $nama; ?>
+                  <small><?php echo $register.' - '.$jabatan; ?></small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -81,9 +87,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profil</a>
-                </div>
                 <div class="pull-right">
                   <a href="<?php echo base_url().'login/logout_admin' ?>" class="btn btn-default btn-flat">Logout</a>
                 </div>
@@ -106,10 +109,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url().'upload_foto/1606060004.jpg' ?>" class="img-circle" alt="User Image" >
+          <img src="<?php echo base_url().'upload_foto/'.$foto; ?>" class="img-circle" alt="User Image" >
         </div>
         <div class="pull-left info">
-          <p>Sam Rock</p>
+          <p><?php echo $nama; ?></p>
+          <small><?php echo $register.' - '.$jabatan; ?></small>
         </div>
       </div>
       <!-- search form -->
