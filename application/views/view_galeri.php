@@ -8,13 +8,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Galery Dokumentasi
+                <h1 class="page-header">Galeri Dokumentasi
                     <small>Subheading</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="<?php echo base_url(); ?>">Home</a>
                     </li>
-                    <li class="active">Galery Dokumentasi</li>
+                    <li class="active">Galeri Dokumentasi</li>
                 </ol>
             </div>
         </div>

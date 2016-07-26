@@ -3,9 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller {
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('proses_model');
+	}
+
 	public function index()
 	{
-		$data['title'] = "Home";
+		$banner = $this->proses_model->get_banner();
+		$data = array(
+			'title' => "Beranda",
+			'banner'=> $banner
+		);
 		$this->load->view('templates/home/header', $data);
 		$this->load->view('view_home');
 		$this->load->view('templates/home/footer');
@@ -75,11 +85,11 @@ class Home extends CI_Controller {
 		$this->load->view('templates/home/footer');
 	}
 
-	public function galery()
+	public function galeri()
 	{
-		$data['title'] = "Galery";
+		$data['title'] = "Galeri";
 		$this->load->view('templates/home/header', $data);
-		$this->load->view('view_galery');
+		$this->load->view('view_galeri');
 		$this->load->view('templates/home/footer');
 	}
 

@@ -169,6 +169,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <small class="label pull-right bg-green"><div id="noreg"></div></small>
           </a>
         </li>
+        <li>
+          <a href="<?php echo base_url().'admin/galeri' ?>">
+            <i class="fa fa-file-photo-o"></i> <span>Galeri</span>
+            <small class="label pull-right bg-green"><div id="galeri"></div></small>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -519,6 +519,71 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	public function galeri()
+	{
+		$session = $this->session->userdata('logged_in_admin');
+		if (isset($session)? $session : null)
+		{
+			$data = array(
+				'title' => "Galeri"
+			);
+			$this->load->view('templates/admin/header', $data);
+			$this->load->view('admin/view_galeri');
+			$this->load->view('templates/admin/footer');
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Anda belum login</div>');
+			redirect('admin');
+		}
+	}
+
+	public function simpan_banner()
+	{
+		$this->form_validation->set_rules('judul', 'Judul', 'trim|required|min_length[3]|max_length[20]');
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->galeri();
+		}
+		else
+		{
+			$judul 		= $this->input->post('judul');
+        	$id_banner1	= date('Ymd');
+        	$id_banner2	= $this->proses_model->get_idbanner();
+        	$id_banner 	= sprintf("%06d%04d",intval($id_banner1),intval($id_banner2['id']));
+
+        	$config['upload_path']		= './upload_banner/';
+	        $config['allowed_types']	= 'gif|jpg|png|jpeg';
+	        $config['file_name']		= $id_banner;
+	        $config['max_size']			= 500;
+	        $config['overwrite']		= TRUE;
+
+	        $this->load->library('upload', $config);
+
+	        if ( ! $this->upload->do_upload('image'))
+	        {
+	                $error = $this->upload->display_errors();
+	                $this->session->set_flashdata('success_msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.$error.'</div>');
+	                redirect('admin/galeri');
+	        }
+	        else
+	        {
+	        	$image  = $this->upload->data();
+	        	$params = array(
+	        		'id_banner' => $id_banner,
+	        		'judul' 	=> ucfirst($judul),
+	        		'image' 	=> $image['file_name'],
+	        		'created_at'=> date('Y-m-d H:i:s')
+	        	);
+
+	        	$this->proses_model->simpan_banner($params);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil upload banner</div>');
+	        	redirect('admin/galeri');
+	        	$this->session->unset_userdata('success_msg');
+        	}
+		}
+	}
+
 	public function _cek_reg($str)
 	{
 

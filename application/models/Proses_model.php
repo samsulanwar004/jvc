@@ -71,6 +71,40 @@ class Proses_model extends CI_Model {
 		return $row2;
 	}
 
+	function get_idbanner()
+	{
+		$this->db->select("id");
+		$this->db->from("generatorid");
+		$this->db->where("idtype","idbanner");
+		$this->db->where("TO_DAYS(this_date)=TO_DAYS(now())");
+		$query=$this->db->get();
+
+		if($query->num_rows() <=0)
+		{
+			$this->db->set("id",1);
+			$this->db->set("this_date","date(now())",FALSE);
+			$this->db->where("idtype","idbanner");
+			$this->db->update("generatorid");
+		}
+		else
+		{
+			$this->db->where("idtype","idbanner");
+			$this->db->from("generatorid");
+			$query2=$this->db->get();
+			$row=$query2->row_array();
+			$this->db->set("id",$row['id']."+1",FALSE);
+			$this->db->where("idtype","idbanner");
+			$this->db->update("generatorid");
+		}
+		$this->db->select("id");
+		$this->db->from("generatorid");
+		$this->db->where("idtype","idbanner");
+		$query3=$this->db->get();
+		$row2=$query3->row_array();
+		//var_dump($row2);exit;
+		return $row2;
+	}
+
 	function simpan_jadwal($params = array())
 	{
 		return $this->db->insert('jadwal', $params);
@@ -84,6 +118,11 @@ class Proses_model extends CI_Model {
 	function simpan_noreg($params = array())
 	{
 		return $this->db->insert('noreg', $params);
+	}
+
+	function simpan_banner($params = array())
+	{
+		return $this->db->insert('banner', $params);
 	}
 
 	function get_jadwal_by_tgl($params = array())
@@ -120,6 +159,15 @@ class Proses_model extends CI_Model {
 	function get_noreg()
 	{
 		$this->db->from('noreg');
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return $result;
+	}
+
+	function get_banner()
+	{
+		$this->db->from('banner');
 		$query = $this->db->get();
 		$result = $query->result();
 

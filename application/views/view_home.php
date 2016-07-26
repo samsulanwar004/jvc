@@ -5,31 +5,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <header id="myCarousel" class="carousel slide">
         <!-- Indicators -->
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <?php 
+                $no = 0;
+                foreach ($banner as $value) {
+                    echo '<li data-target="#myCarousel" data-slide-to="'.$no.'"';
+                    if ($no == 0) {echo 'class="active"';}
+                    echo '></li>';
+                    $no++;
+                }
+            ?>
         </ol>
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
-            <div class="item active">
-                <div class="fill" style="background-image:url('<?php echo base_url()."assets/images/1.jpg" ?>');"></div>
-                <div class="carousel-caption">
-                    <h2>Caption 1</h2>
-                </div>
-            </div>
-            <div class="item">
-                <div class="fill" style="background-image:url('<?php echo base_url()."assets/images/2.jpg" ?>');"></div>
-                <div class="carousel-caption">
-                    <h2>Caption 2</h2>
-                </div>
-            </div>
-            <div class="item">
-                <div class="fill" style="background-image:url('<?php echo base_url()."assets/images/3.jpg" ?>');"></div>
-                <div class="carousel-caption">
-                    <h2>Caption 3</h2>
-                </div>
-            </div>
+            <?php
+                $no = 0;
+                foreach ($banner as $value) {
+                    echo '<div class="item ';
+                    if ($no == 0){echo 'active';}
+                    echo '">
+                            <div class="fill" style="background-image:url(\''.base_url()."upload_banner/".$value->image.'\');"></div>
+                            <div class="carousel-caption">
+                                <h2>'.$value->judul.'</h2>
+                            </div>
+                        </div>';
+                    $no++;
+                }
+            ?>
         </div>
 
         <!-- Controls -->
