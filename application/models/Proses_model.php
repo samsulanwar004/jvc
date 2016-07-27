@@ -271,6 +271,16 @@ class Proses_model extends CI_Model {
 		return $result;
 	}
 
+	function get_banner_by_id($id_banner)
+	{
+		$this->db->from('banner');
+		$this->db->where('id_banner', $id_banner);
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
 	function hapus_jadwal($id_jadwal)
 	{
 		$this->db->where('id_jadwal', $id_jadwal);
@@ -287,6 +297,12 @@ class Proses_model extends CI_Model {
 	{
 		$this->db->where('id_jabatan', $id_jabatan);
 		$this->db->delete('jabatan');
+	}
+
+	function hapus_banner($id_banner)
+	{
+		$this->db->where('id_banner', $id_banner);
+		$this->db->delete('banner');
 	}
 
 	function update_jabatan($params = array())

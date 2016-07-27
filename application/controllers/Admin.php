@@ -524,8 +524,11 @@ class Admin extends CI_Controller {
 		$session = $this->session->userdata('logged_in_admin');
 		if (isset($session)? $session : null)
 		{
+			$banner = $this->proses_model->get_banner();
 			$data = array(
-				'title' => "Galeri"
+				'title' => "Galeri",
+				'banner'=> $banner,
+				'key'	=> $this->config->item('encryption_key')
 			);
 			$this->load->view('templates/admin/header', $data);
 			$this->load->view('admin/view_galeri');
@@ -582,6 +585,31 @@ class Admin extends CI_Controller {
 	        	$this->session->unset_userdata('success_msg');
         	}
 		}
+	}
+
+	public function hapus_banner()
+	{
+
+		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_banner');
+
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->session->unset_userdata('success_msg');
+        	$this->galeri();
+        }
+        else
+        {
+        	$id_banner 	= $this->input->post('idBanner');
+        	$banner 	= $this->proses_model->get_banner_by_id($id_banner);
+        	if ($banner->image == TRUE)
+        	{
+        		unlink("upload_banner/".$banner->image);
+        	}
+        	$this->proses_model->hapus_banner($id_banner);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus banner</div>');
+        	redirect('admin/galeri');
+        	$this->session->unset_userdata('success_msg');
+        }
 	}
 
 	public function _cek_reg($str)
@@ -677,6 +705,18 @@ class Admin extends CI_Controller {
 			return TRUE;
 		}
 		$this->form_validation->set_message('_cek_noreg_status', 'Register masih terpakai di member');
+	   	return FALSE;
+	}
+
+	public function _cek_banner($str)
+	{
+		$id 	= $this->input->post('idBanner');
+		$enkrip = sha1($id.$this->config->item('encryption_key'));
+		if ($str === $enkrip)
+		{
+			return TRUE;
+		}
+		$this->form_validation->set_message('_cek_banner', 'Key Security tidak benar');
 	   	return FALSE;
 	}
 }

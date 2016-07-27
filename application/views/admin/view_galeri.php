@@ -48,6 +48,79 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">Daftar Banner</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="tabelBanner" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Judul</th>
+                  <th>Image</th>
+                  <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                  $no = 1;
+                  foreach ($banner as $value) {
+                ?>
+                <tr>
+                  <td><?php echo $no; ?></td>
+                  <td><?php echo $value->judul; ?></td>
+                  <td><?php echo '<img class="img-responsive img-thumbnail img-hover" src="'.base_url().'upload_banner/'.$value->image.'" alt="">' ?></td>
+                  <td>
+                    <div class="tools">
+                      <a href="#" data-toggle="modal" data-target="#myModalHapusBanner<?php echo $no; ?>"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                  </td>
+                </tr>
+                <!--Modal Hapus Kalender -->
+                <div class="modal fade modal-warning" id="myModalHapusBanner<?php echo $no; ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Peringatan!</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>Apakah anda ingin hapus banner <?php echo $value->judul; ?> ?</p>
+                      </div>
+                      <div class="modal-footer">
+                      <?php echo form_open('admin/hapus_banner'); ?>
+                        <input type="hidden" name="idBanner" value="<?php echo $value->id_banner; ?>">
+                        <input type="hidden" name="security" value="<?php echo sha1($value->id_banner.$key)?>">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-outline">Hapus</button>
+                      </form>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+                <?php
+                  $no++;
+                  }
+                ?>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>No</th>
+                  <th>Judul</th>
+                  <th>Image</th>
+                  <th>Aksi</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
         </div>
         <!-- /.col (left) -->
         <div class="col-md-6">

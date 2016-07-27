@@ -54,6 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   $(function () {
     //Table
     $("#tabelMember").DataTable();
+    $("#tabelBanner").DataTable();
     //Date picker
     $('#datepicker').datepicker({
       autoclose: true,
