@@ -125,6 +125,11 @@ class Proses_model extends CI_Model {
 		return $this->db->insert('banner', $params);
 	}
 
+	function simpan_galeri($params = array())
+	{
+		return $this->db->insert('galeri', $params);
+	}
+
 	function get_jadwal_by_tgl($params = array())
 	{
 		$awal = $params['tgl_awal'];
@@ -168,6 +173,26 @@ class Proses_model extends CI_Model {
 	function get_banner()
 	{
 		$this->db->from('banner');
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return $result;
+	}
+
+	function get_galeri()
+	{
+		$this->db->from('galeri');
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return $result;
+	}
+
+	function get_galeri_by_pag($limit, $start)
+	{
+		$this->db->from('galeri');
+		$this->db->order_by('id_galeri', 'desc');
+		$this->db->limit($limit, $start);
 		$query = $this->db->get();
 		$result = $query->result();
 
@@ -261,6 +286,16 @@ class Proses_model extends CI_Model {
 		return $result;
 	}
 
+	function get_count_galeri()
+	{
+		$this->db->select('count(*) as count');
+		$this->db->from('galeri');
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
 	function get_member_by_reg($reg)
 	{
 		$this->db->from('members');
@@ -275,6 +310,16 @@ class Proses_model extends CI_Model {
 	{
 		$this->db->from('banner');
 		$this->db->where('id_banner', $id_banner);
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
+	function get_galeri_by_id($id_galeri)
+	{
+		$this->db->from('galeri');
+		$this->db->where('id_galeri', $id_galeri);
 		$query = $this->db->get();
 		$result = $query->row();
 
@@ -303,6 +348,12 @@ class Proses_model extends CI_Model {
 	{
 		$this->db->where('id_banner', $id_banner);
 		$this->db->delete('banner');
+	}
+
+	function hapus_galeri($id_galeri)
+	{
+		$this->db->where('id_galeri', $id_galeri);
+		$this->db->delete('galeri');
 	}
 
 	function update_jabatan($params = array())

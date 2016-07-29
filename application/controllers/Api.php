@@ -86,6 +86,12 @@ class Api extends CI_Controller {
     echo $noreg->count;
   }
 
+  public function galeri()
+  {
+    $galeri = $this->proses_model->get_count_galeri();
+    echo $galeri->count;
+  }
+
   public function auto_noreg()
   {
     $noreg = $this->input->post('noreg');

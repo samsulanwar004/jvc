@@ -7,6 +7,7 @@ class Home extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('proses_model');
+		$this->load->library('pagination');
 	}
 
 	public function index()
@@ -85,9 +86,21 @@ class Home extends CI_Controller {
 		$this->load->view('templates/home/footer');
 	}
 
-	public function galeri()
+	public function galeri($start = NULL)
 	{
-		$data['title'] = "Galeri";
+		$rows 	= $this->proses_model->get_count_galeri();
+		$config['base_url'] = base_url('home/galeri/');
+		$config['total_rows'] = $rows->count;
+		$config['per_page'] = 6;
+		$this->pagination->initialize($config);
+		$galeri = $this->proses_model->get_galeri_by_pag($config['per_page'], $start);
+		$pagination = $this->pagination->create_links();
+		
+		$data = array(
+			'title' => "Galeri",
+			'galeri'=> $galeri,
+			'links'	=> $pagination
+		);
 		$this->load->view('templates/home/header', $data);
 		$this->load->view('view_galeri');
 		$this->load->view('templates/home/footer');

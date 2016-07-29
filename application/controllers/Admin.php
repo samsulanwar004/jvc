@@ -525,9 +525,11 @@ class Admin extends CI_Controller {
 		if (isset($session)? $session : null)
 		{
 			$banner = $this->proses_model->get_banner();
+			$galeri = $this->proses_model->get_galeri();
 			$data = array(
 				'title' => "Galeri",
 				'banner'=> $banner,
+				'galeri'=> $galeri,
 				'key'	=> $this->config->item('encryption_key')
 			);
 			$this->load->view('templates/admin/header', $data);
@@ -543,14 +545,14 @@ class Admin extends CI_Controller {
 
 	public function simpan_banner()
 	{
-		$this->form_validation->set_rules('judul', 'Judul', 'trim|required|min_length[3]|max_length[20]');
+		$this->form_validation->set_rules('judul_banner', 'Judul', 'trim|required|min_length[3]|max_length[20]');
 		if ($this->form_validation->run() == FALSE)
 		{
 			$this->galeri();
 		}
 		else
 		{
-			$judul 		= $this->input->post('judul');
+			$judul 		= $this->input->post('judul_banner');
         	$id_banner1	= date('Ymd');
         	$id_banner2	= $this->proses_model->get_idbanner();
         	$id_banner 	= sprintf("%06d%04d",intval($id_banner1),intval($id_banner2['id']));
@@ -607,6 +609,77 @@ class Admin extends CI_Controller {
         	}
         	$this->proses_model->hapus_banner($id_banner);
         	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus banner</div>');
+        	redirect('admin/galeri');
+        	$this->session->unset_userdata('success_msg');
+        }
+	}
+
+	public function simpan_galeri()
+	{
+		$this->form_validation->set_rules('judul_galeri', 'Judul', 'trim|required|min_length[3]|max_length[20]');
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->galeri();
+		}
+		else
+		{
+			$judul 		= $this->input->post('judul_galeri');
+        	$id_galeri1	= date('Ymd');
+        	$id_galeri2	= $this->proses_model->get_idbanner();
+        	$id_galeri 	= sprintf("%06d%04d",intval($id_galeri1),intval($id_galeri2['id']));
+
+        	$config['upload_path']		= './upload_galeri/';
+	        $config['allowed_types']	= 'gif|jpg|png|jpeg';
+	        $config['file_name']		= $id_galeri;
+	        $config['max_size']			= 500;
+	        $config['overwrite']		= TRUE;
+
+	        $this->load->library('upload', $config);
+
+	        if ( ! $this->upload->do_upload('image'))
+	        {
+	                $error = $this->upload->display_errors();
+	                $this->session->set_flashdata('success_msg', '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.$error.'</div>');
+	                redirect('admin/galeri');
+	        }
+	        else
+	        {
+	        	$image  = $this->upload->data();
+	        	$params = array(
+	        		'id_galeri' => $id_galeri,
+	        		'judul' 	=> ucfirst($judul),
+	        		'image' 	=> $image['file_name'],
+	        		'created_at'=> date('Y-m-d H:i:s')
+	        	);
+
+	        	$this->proses_model->simpan_galeri($params);
+	        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil upload galeri</div>');
+	        	redirect('admin/galeri');
+	        	$this->session->unset_userdata('success_msg');
+        	}
+		}
+	}
+
+	public function hapus_galeri()
+	{
+
+		$this->form_validation->set_rules('security', 'Key Security', 'required|callback__cek_galeri');
+
+		if ($this->form_validation->run() == FALSE)
+        {
+        	$this->session->unset_userdata('success_msg');
+        	$this->galeri();
+        }
+        else
+        {
+        	$id_galeri 	= $this->input->post('idGaleri');
+        	$galeri 	= $this->proses_model->get_galeri_by_id($id_galeri);
+        	if ($galeri->image == TRUE)
+        	{
+        		unlink("upload_galeri/".$galeri->image);
+        	}
+        	$this->proses_model->hapus_galeri($id_galeri);
+        	$this->session->set_flashdata('success_msg', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Berhasil hapus galeri</div>');
         	redirect('admin/galeri');
         	$this->session->unset_userdata('success_msg');
         }
@@ -717,6 +790,18 @@ class Admin extends CI_Controller {
 			return TRUE;
 		}
 		$this->form_validation->set_message('_cek_banner', 'Key Security tidak benar');
+	   	return FALSE;
+	}
+
+	public function _cek_galeri($str)
+	{
+		$id 	= $this->input->post('idGaleri');
+		$enkrip = sha1($id.$this->config->item('encryption_key'));
+		if ($str === $enkrip)
+		{
+			return TRUE;
+		}
+		$this->form_validation->set_message('_cek_galeri', 'Key Security tidak benar');
 	   	return FALSE;
 	}
 }

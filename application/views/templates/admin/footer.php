@@ -55,6 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     //Table
     $("#tabelMember").DataTable();
     $("#tabelBanner").DataTable();
+    $("#tabelGaleri").DataTable();
     //Date picker
     $('#datepicker').datepicker({
       autoclose: true,
@@ -111,6 +112,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       url: "<?php echo base_url().'api/noreg/' ?>"
       }).done(function( data ) {
        $('#noreg').html(data);
+    });
+
+    $.ajax({
+    type: "GET",
+    url: "<?php echo base_url().'api/galeri/' ?>"
+    }).done(function( data ) {
+     $('#galeri').html(data);
     });
 
     $("#search-box").keyup(function(){
