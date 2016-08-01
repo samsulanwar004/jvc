@@ -37,9 +37,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
                <!-- textarea -->
               <div class="form-group">
-              <label>Image</label>
+                <label>Image</label>
                 <input type="file" name="image" class="form-control">
               </div>
+              <br><br>
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Simpan</button>
               </div>
@@ -137,8 +138,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
                <!-- textarea -->
               <div class="form-group">
-              <label>Image</label>
+                <label>Image</label>
                 <input type="file" name="image" class="form-control">
+              </div>
+              <div class="form-group">
+                <input type="radio" name="tipe" value="1"> Logo
+                <input type="radio" name="tipe" checked="checked" value="2"> Non Logo
               </div>
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Simpan</button>
@@ -160,6 +165,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th>No</th>
                   <th>Judul</th>
                   <th>Image</th>
+                  <th>Tipe</th>
                   <th>Aksi</th>
                 </tr>
                 </thead>
@@ -172,6 +178,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <td><?php echo $nom; ?></td>
                   <td><?php echo $value2->judul; ?></td>
                   <td><?php echo '<img class="img-responsive img-thumbnail img-hover" src="'.base_url().'upload_galeri/'.$value2->image.'" style="height: 250px;">' ?></td>
+                  <td><?php if ($value2->tipe == 1) { echo 'Logo';} else { echo 'Non Logo'; } ?></td>
                   <td>
                     <div class="tools">
                       <a href="#" data-toggle="modal" data-target="#myModalHapusGaleri<?php echo $nom; ?>"><i class="fa fa-trash-o"></i></a>
@@ -213,6 +220,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <th>No</th>
                   <th>Judul</th>
                   <th>Image</th>
+                  <th>Tipe</th>
                   <th>Aksi</th>
                 </tr>
                 </tfoot>

@@ -624,6 +624,7 @@ class Admin extends CI_Controller {
 		else
 		{
 			$judul 		= $this->input->post('judul_galeri');
+			$tipe 		= $this->input->post('tipe');
         	$id_galeri1	= date('Ymd');
         	$id_galeri2	= $this->proses_model->get_idbanner();
         	$id_galeri 	= sprintf("%06d%04d",intval($id_galeri1),intval($id_galeri2['id']));
@@ -649,6 +650,7 @@ class Admin extends CI_Controller {
 	        		'id_galeri' => $id_galeri,
 	        		'judul' 	=> ucfirst($judul),
 	        		'image' 	=> $image['file_name'],
+	        		'tipe'		=> $tipe,
 	        		'created_at'=> date('Y-m-d H:i:s')
 	        	);
 

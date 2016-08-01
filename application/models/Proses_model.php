@@ -173,6 +173,7 @@ class Proses_model extends CI_Model {
 	function get_banner()
 	{
 		$this->db->from('banner');
+		$this->db->order_by('id_banner', 'DESC');
 		$query = $this->db->get();
 		$result = $query->result();
 
@@ -182,6 +183,7 @@ class Proses_model extends CI_Model {
 	function get_galeri()
 	{
 		$this->db->from('galeri');
+		$this->db->order_by('id_galeri', 'DESC');
 		$query = $this->db->get();
 		$result = $query->result();
 
@@ -192,6 +194,19 @@ class Proses_model extends CI_Model {
 	{
 		$this->db->from('galeri');
 		$this->db->order_by('id_galeri', 'desc');
+		$this->db->where('tipe', 2);
+		$this->db->limit($limit, $start);
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return $result;
+	}
+
+	function get_logo_by_pag($limit, $start)
+	{
+		$this->db->from('galeri');
+		$this->db->order_by('id_galeri', 'desc');
+		$this->db->where('tipe', 1);
 		$this->db->limit($limit, $start);
 		$query = $this->db->get();
 		$result = $query->result();
@@ -290,6 +305,18 @@ class Proses_model extends CI_Model {
 	{
 		$this->db->select('count(*) as count');
 		$this->db->from('galeri');
+		$this->db->where('tipe', 2);
+		$query = $this->db->get();
+		$result = $query->row();
+
+		return $result;
+	}
+
+	function get_count_logo()
+	{
+		$this->db->select('count(*) as count');
+		$this->db->from('galeri');
+		$this->db->where('tipe', 1);
 		$query = $this->db->get();
 		$result = $query->row();
 

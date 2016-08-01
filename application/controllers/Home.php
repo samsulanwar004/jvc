@@ -89,11 +89,11 @@ class Home extends CI_Controller {
 	public function galeri($start = NULL)
 	{
 		$rows 	= $this->proses_model->get_count_galeri();
-		$config['base_url'] = base_url('home/galeri/');
-		$config['total_rows'] = $rows->count;
-		$config['per_page'] = 6;
+		$config['base_url'] 	= base_url('home/galeri/');
+		$config['total_rows'] 	= $rows->count;
+		$config['per_page'] 	= 6;
 		$this->pagination->initialize($config);
-		$galeri = $this->proses_model->get_galeri_by_pag($config['per_page'], $start);
+		$galeri 	= $this->proses_model->get_galeri_by_pag($config['per_page'], $start);
 		$pagination = $this->pagination->create_links();
 		
 		$data = array(
@@ -106,9 +106,21 @@ class Home extends CI_Controller {
 		$this->load->view('templates/home/footer');
 	}
 
-	public function tentang()
+	public function tentang($start = NULL)
 	{
-		$data['title'] = "Tentang Kami";
+		$rows 	= $this->proses_model->get_count_logo();
+		$config['base_url'] 	= base_url('home/tentang/');
+		$config['total_rows'] 	= $rows->count;
+		$config['per_page'] 	= 6;
+		$this->pagination->initialize($config);
+		$logo 		= $this->proses_model->get_logo_by_pag($config['per_page'], $start);
+		$pagination = $this->pagination->create_links();
+
+		$data = array(
+			'title' => "Tentang",
+			'logo'	=> $logo,
+			'links'	=> $pagination
+		);
 		$this->load->view('templates/home/header', $data);
 		$this->load->view('view_tentang');
 		$this->load->view('templates/home/footer');
